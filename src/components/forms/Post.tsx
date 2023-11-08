@@ -1,3 +1,4 @@
+"use client";
 function Post() {
   return <div>Post</div>;
 }
