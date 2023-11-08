@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         "secondary-color-bg-2": "#F7F7F7",
+        "secondary-color-secondary-2": "#3F4354",
+        "blue-blue": "#347AE2",
       },
     },
   },
