@@ -4,8 +4,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <NavBar />
-      <div className="mt-8"></div>
-      {children}
+      <div className="py-5 px-10">{children}</div>
     </div>
   );
 };

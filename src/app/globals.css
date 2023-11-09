@@ -3,6 +3,6 @@
 @tailwind utilities;
 @layer base {
   body {
-    @apply bg-secondary-color-bg-2;
+    @apply bg-secondary-color-bg-2 dark:bg-dark2 text-dark2 dark:text-white;
   }
 }
