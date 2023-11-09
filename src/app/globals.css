@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
+  html {
+    max-width: 1440px;
+    @apply mx-auto;
+  }
   body {
-    @apply bg-secondary-color-bg-2 dark:bg-dark2 text-dark2 dark:text-white;
+    @apply bg-secondary-color-bg-2 dark:bg-dark2 text-dark2 dark:text-white mx-auto w-full p-0;
   }
 }

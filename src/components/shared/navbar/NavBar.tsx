@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/ModeToggle";
 import IconMesssage from "@/components/icons/IconMesssage";
 import IconNoti from "@/components/icons/IconNoti";
 import { navLinks } from "@/constants";
@@ -52,16 +53,11 @@ export const NavBar = () => {
         <div className="w-10 h-10 rouned-lg flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
           <IconMesssage />
         </div>
-        <div className="w-10 h-10 rouned-lg flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
+        <div className="w-10 h-10 flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
           <IconNoti />
         </div>
-        <div className="w-10 h-10 rouned-lg flex items-center justify-center rounded-lg">
-          <img
-            src="https://source.unsplash.com/random"
-            className="w-full h-full object-cover rounded-lg"
-            alt=""
-          />
-        </div>
+        <div className="w-10 h-10 rouned-lg flex items-center justify-center rounded-lg"></div>
+        <ModeToggle></ModeToggle>
       </div>
     </div>
   );

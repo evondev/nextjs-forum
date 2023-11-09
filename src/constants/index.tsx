@@ -29,4 +29,22 @@ const navLinks: {
     url: "/interviews",
   },
 ];
-export { navLinks };
+const widgetFilter = [
+  {
+    icon: "/icons/icon-star.svg",
+    title: "Newest and Recent",
+    desc: "Find the latest update",
+  },
+  {
+    icon: "/icons/icon-popular.svg",
+    title: "Popular of the day",
+    desc: "Shots featured today by curators",
+  },
+  {
+    icon: "/icons/icon-follow.svg",
+    title: "Following",
+    desc: "Explore from your favorite person",
+  },
+];
+
+export { navLinks, widgetFilter };
