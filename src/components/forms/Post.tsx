@@ -8,12 +8,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createPost } from "@/lib/actions/post.action";
 import { postSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
 function Post() {
@@ -26,9 +28,16 @@ function Post() {
       tags: [],
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function onSubmit(values: z.infer<typeof postSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof postSchema>) {
+    setIsSubmitting(true);
+    try {
+      await createPost({});
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
   }
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -89,6 +98,8 @@ function Post() {
                       // @ts-ignore
                       onInit={(evt, editor) => (editorRef.current = editor)}
                       initialValue="<p>This is the initial content of the editor.</p>"
+                      onBlur={field.onBlur}
+                      onEditorChange={(content) => field.onChange(content)}
                       init={{
                         height: 500,
                         menubar: false,
@@ -138,12 +149,24 @@ function Post() {
                     is about
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Add a tag..."
-                      className="h-auto py-3 px-5 text-sm leading-normal"
-                      onKeyDown={(e) => handleInputKeyDown(e, field)}
-                    />
+                    <>
+                      <Input
+                        placeholder="Add a tag..."
+                        className="h-auto py-3 px-5 text-sm leading-normal"
+                        onKeyDown={(e) => handleInputKeyDown(e, field)}
+                      />
+                      {field.value.length > 0 && (
+                        <div className="flex gap-2">
+                          {field.value.map((tag) => (
+                            <div key={tag}>
+                              <Badge>{tag}</Badge>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   </FormControl>
+
                   <FormMessage className="text-red-400" />
                 </FormItem>
               </>
@@ -151,7 +174,8 @@ function Post() {
           />
           <Button
             type="submit"
-            className="py-2.5 px-10 bg-blue-blue rounded-lg text-white text-base"
+            className="py-2.5 px-10 bg-primary rounded-lg text-white text-base disabled:opacity-50"
+            disabled={isSubmitting}
           >
             Submit
           </Button>

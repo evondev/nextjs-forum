@@ -1,0 +1,13 @@
+# Post
+
+- title
+- content
+- tags
+- cover
+- group
+- views
+- likes
+- share
+- comments
+- created date
+- user
