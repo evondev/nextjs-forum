@@ -12,13 +12,14 @@ import { createPost } from "@/lib/actions/post.action";
 import { postSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
-function Post() {
+function Post({ userId }: { userId: string }) {
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -29,12 +30,20 @@ function Post() {
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const router = useRouter();
+  const pathname = usePathname();
   async function onSubmit(values: z.infer<typeof postSchema>) {
     setIsSubmitting(true);
     try {
-      await createPost({});
+      await createPost({
+        title: values.title,
+        content: values.content,
+        tags: values.tags,
+        author: JSON.parse(userId),
+      });
+      // router.push("/");
     } catch (error) {
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -65,7 +74,7 @@ function Post() {
     }
   };
   return (
-    <div className="bg-white max-w-[900px] mx-auto p-8 rounded-2xl">
+    <div className="bg-white dark:bg-dark3 max-w-[900px] mx-auto p-8 rounded-2xl">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -77,7 +86,7 @@ function Post() {
                   <FormControl>
                     <Input
                       placeholder="Title..."
-                      className="py-3 px-5 bg-secondary-color-bg-2 font-bold text-2xl rounded-lg leading-normal h-auto"
+                      className="py-3 px-5 bg-secondary-color-bg-2 font-bold text-2xl rounded-lg leading-normal h-auto dark:bg-dark4 dark:text-white"
                       {...field}
                     />
                   </FormControl>
@@ -144,7 +153,7 @@ function Post() {
             render={({ field }) => (
               <>
                 <FormItem>
-                  <FormLabel className="text-secondary-color-secondary-2 text-sm font-semibold">
+                  <FormLabel className="text-secondary-color-2 text-sm font-semibold dark:text-white">
                     Add or change tags (up to 5) so readers know what your story
                     is about
                   </FormLabel>
@@ -152,7 +161,7 @@ function Post() {
                     <>
                       <Input
                         placeholder="Add a tag..."
-                        className="h-auto py-3 px-5 text-sm leading-normal"
+                        className="h-auto py-3 px-5 text-sm leading-normal dark:border-dark4 bg-transparent"
                         onKeyDown={(e) => handleInputKeyDown(e, field)}
                       />
                       {field.value.length > 0 && (
@@ -172,13 +181,22 @@ function Post() {
               </>
             )}
           />
-          <Button
-            type="submit"
-            className="py-2.5 px-10 bg-primary rounded-lg text-white text-base disabled:opacity-50"
-            disabled={isSubmitting}
-          >
-            Submit
-          </Button>
+          <div className="flex items-center gap-5">
+            <Button
+              type="submit"
+              className="py-2.5 px-10 bg-secondary rounded-lg text-white text-base disabled:opacity-50"
+              disabled={isSubmitting}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="ghost"
+              type="reset"
+              className="font-normal text-base text-secondary-color-3 p-0"
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
