@@ -1,7 +1,5 @@
-import { IPost } from "@/database/post.model";
-
 /* eslint-disable @next/next/no-img-element */
-function PostCard({ item }: { item: IPost }) {
+function PostCard({ item }: { item: any }) {
   return (
     <div className="bg-white p-5 rounded-2xl flex items-center gap-5 relative">
       <img
@@ -14,7 +12,7 @@ function PostCard({ item }: { item: IPost }) {
           {item.title}
         </h2>
         <div className="flex items-center gap-2.5 mb-8">
-          {item.tags.map((item: any, index) => (
+          {item.tags.map((item: any, index: number) => (
             <div
               key={index}
               className="py-1 px-2.5 rounded-full bg-secondary-color-6 text-secondary-color-4 text-xs"
