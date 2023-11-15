@@ -7,7 +7,6 @@ async function CreatePost() {
   const userId = "123456";
   if (!userId) redirect("/sign-in");
   const mongoUser = await getUserById({ userId });
-  console.log("file: page.tsx:10 ~ CreatePost ~ mongoUser:", mongoUser);
   return (
     <div>
       <Post userId={JSON.stringify(mongoUser._id)} />

@@ -1,13 +1,29 @@
 "use server";
 import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
+import User from "@/database/user.model";
+import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
-interface Props {
-  title: string;
-  content: string;
-  tags: string[];
-  author: string;
-  path?: string;
+import { CreatePostParams, GetPostParams } from "./shared.types";
+
+export async function getPosts(params: GetPostParams) {
+  try {
+    connectToDatabase();
+    const posts = await Post.find({})
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .populate({
+        path: "author",
+        model: User,
+      });
+    return {
+      posts,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 export async function createPost({
   title,
@@ -15,7 +31,7 @@ export async function createPost({
   tags,
   author,
   path,
-}: Props) {
+}: CreatePostParams) {
   try {
     connectToDatabase();
     const post = await Post.create({
@@ -37,5 +53,8 @@ export async function createPost({
     await Post.findByIdAndUpdate(post._id, {
       $push: { tags: { $each: tagDocuments } },
     });
-  } catch (error) {}
+    revalidatePath(path || "/");
+  } catch (error) {
+    console.log("file: post.action.ts:41 ~ error:", error);
+  }
 }

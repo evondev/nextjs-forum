@@ -41,7 +41,7 @@ function Post({ userId }: { userId: string }) {
         tags: values.tags,
         author: JSON.parse(userId),
       });
-      // router.push("/");
+      router.push("/");
     } catch (error) {
       console.log(error);
     } finally {

@@ -2,10 +2,13 @@ import { Document, Schema, model, models } from "mongoose";
 export interface IPost extends Document {
   title: string;
   content: string;
-  image: string;
+  avatar: string;
   tags: Schema.Types.ObjectId[];
   views: number;
   likes: Schema.Types.ObjectId[];
+  saves: Schema.Types.ObjectId[];
+  upvotes: Schema.Types.ObjectId[];
+  downvotes: Schema.Types.ObjectId[];
   author: Schema.Types.ObjectId;
   comments: Schema.Types.ObjectId[];
   createdAt: Date;
@@ -19,8 +22,9 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  image: {
+  avatar: {
     type: String,
+    default: "https://source.unsplash.com/random",
   },
   tags: [
     {
@@ -33,6 +37,24 @@ const PostSchema = new Schema({
     default: 0,
   },
   likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  saves: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  upvotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  downvotes: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",

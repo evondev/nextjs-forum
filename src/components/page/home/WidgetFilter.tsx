@@ -18,7 +18,7 @@ function WidgetItem({ item }: { item: (typeof widgetFilter)[0] }) {
       </div>
       <div className="flex-1 flex flex-col">
         <h3 className="text-xs font-semibold">{item.title}</h3>
-        <p className="text-[9px] text-secondary-color-3">{item.desc}</p>
+        <p className="text-[10px] text-secondary-color-3">{item.desc}</p>
       </div>
     </div>
   );
