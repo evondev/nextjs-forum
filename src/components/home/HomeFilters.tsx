@@ -2,12 +2,12 @@ import Link from "next/link";
 
 function HomeFilters() {
   return (
-    <div className="p-5 bg-white rounded-2xl flex items-center gap-5">
+    <div className="p-5 bg-white rounded-2xl flex items-center gap-5 dark:bg-dark3">
       <div className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0"></div>
       <input
         type="text"
         placeholder="Let’s share what going on your mind..."
-        className="w-full outline-none p-3 bg-secondary-color-6 rounded-md text-sm"
+        className="w-full outline-none p-3 bg-secondary-color-6 rounded-md text-sm dark:bg-dark4"
       />
       <Link
         href="/create-post"

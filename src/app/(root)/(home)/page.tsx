@@ -6,15 +6,23 @@ import { getPosts } from "@/lib/actions/post.action";
 async function Home() {
   const result = await getPosts({});
   return (
-    <div className="grid grid-cols-[210px_minmax(0,1fr)_285px] gap-5 max-w-[1440px] mx-auto">
+    <div className="grid grid-cols-[250px_minmax(0,1fr)] gap-5 max-w-[1440px] mx-auto">
       <LeftSidebar></LeftSidebar>
       <div className="flex flex-col gap-5">
         <HomeFilters></HomeFilters>
-        {result?.posts.map((item, index) => (
-          <PostCard key={index} item={item} />
+        {result?.posts.map((post, index) => (
+          <PostCard
+            key={post._id}
+            _id={post._id}
+            title={post.title}
+            tags={post.tags}
+            author={post.author}
+            upvotes={post.upvotes}
+            views={post.views}
+            createdAt={post.createdAt}
+          />
         ))}
       </div>
-      <div>3</div>
     </div>
   );
 }

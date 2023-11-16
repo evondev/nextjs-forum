@@ -1,21 +1,47 @@
 /* eslint-disable @next/next/no-img-element */
-function PostCard({ item }: { item: any }) {
+interface PostProps {
+  _id: string;
+  title: string;
+  tags: {
+    _id: string;
+    name: string;
+  }[];
+  author: {
+    _id: string;
+    name: string;
+    picture: string;
+    clerkId: string;
+  };
+  upvotes: string[];
+  views: number;
+  createdAt: Date;
+  clerkId?: string | null;
+}
+
+function PostCard({
+  clerkId,
+  _id,
+  title,
+  tags,
+  author,
+  upvotes,
+  views,
+  createdAt,
+}: PostProps) {
   return (
-    <div className="bg-white p-5 rounded-2xl flex items-center gap-5 relative">
+    <div className="bg-white p-5 rounded-2xl flex items-center gap-5 relative dark:bg-dark3">
       <img
         src="https://plus.unsplash.com/premium_photo-1696879453950-a121fad02642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5OTk4MjY4MA&ixlib=rb-4.0.3&q=80&w=1080"
         alt=""
         className="w-[156px] aspect-square rounded-2xl object-cover flex-shrink-0"
       />
       <div className="flex-1">
-        <h2 className="text-lg font-semibold max-w-[90%] mb-2.5">
-          {item.title}
-        </h2>
+        <h2 className="text-lg font-semibold max-w-[90%] mb-2.5">{title}</h2>
         <div className="flex items-center gap-2.5 mb-8">
-          {item.tags.map((item: any, index: number) => (
+          {tags.map((item: any, index: number) => (
             <div
               key={index}
-              className="py-1 px-2.5 rounded-full bg-secondary-color-6 text-secondary-color-4 text-xs"
+              className="py-1 px-2.5 rounded-full bg-secondary-color-6 text-secondary-color-4 text-xs dark:bg-dark4 dark:text-secondary-color-5"
             >
               {item.name}
             </div>
@@ -25,7 +51,7 @@ function PostCard({ item }: { item: any }) {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gray-100"></div>
             <div>
-              <h3 className="text-secondary-color-2 font-semibold text-sm">
+              <h3 className="text-secondary-color-2 font-semibold text-sm dark:text-secondary-color-6">
                 Pavel Gvay
               </h3>
               <span className="text-secondary-color-3 text-xs">
@@ -33,7 +59,7 @@ function PostCard({ item }: { item: any }) {
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-10 text-secondary-color-3 text-sm">
+          <div className="flex items-center gap-10 text-secondary-color-3 text-sm dark:text-secondary-color-5">
             <div>651,324 Views</div>
             <div>36,6545 Likes</div>
             <div>56 comments</div>
@@ -42,7 +68,7 @@ function PostCard({ item }: { item: any }) {
       </div>
       <button
         type="button"
-        className="flex items-center justify-center w-8 h-8 rounded-full bg-secondary-color-6 absolute right-5 top-5"
+        className="flex items-center justify-center w-8 h-8 rounded-full bg-secondary-color-6 absolute right-5 top-5 dark:bg-dark4"
       >
         <svg
           width={20}

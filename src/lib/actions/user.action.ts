@@ -53,8 +53,7 @@ export async function deleteUser(params: DeleteUserParams) {
     await Post.deleteMany({ author: user._id });
     // Todo: delete users comments
     const deletedUser = await User.findByIdAndDelete(user._id);
-    return deleteUser;
-    return user;
+    return deletedUser;
   } catch (error) {
     console.log(error);
   }
