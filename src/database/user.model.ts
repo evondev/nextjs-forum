@@ -18,6 +18,7 @@ export interface IUser extends Document {
     youtube?: string;
   };
   liked: Schema.Types.ObjectId[];
+  saved: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
 const UserSchema = new Schema({
@@ -79,6 +80,12 @@ const UserSchema = new Schema({
     },
   },
   liked: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
+  saved: [
     {
       type: Schema.Types.ObjectId,
       ref: "Post",

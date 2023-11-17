@@ -1,32 +1,40 @@
-import IconCalendar from "@/components/icons/IconCalendar";
-import IconGroup from "@/components/icons/IconGroup";
 import IconHome from "@/components/icons/IconHome";
-import IconInterview from "@/components/icons/IconInterview";
-import IconPodcast from "@/components/icons/IconPodcast";
+import IconUser from "@/components/icons/IconUser";
 
 const navLinks: {
   icon: React.ReactNode;
   url: string;
+  title: string;
 }[] = [
   {
     icon: <IconHome></IconHome>,
     url: "/",
+    title: "Home",
   },
   {
-    icon: <IconCalendar />,
-    url: "/meetups",
+    icon: <IconUser></IconUser>,
+    url: "/users",
+    title: "All users",
   },
   {
-    icon: <IconGroup />,
-    url: "/groups",
+    icon: <IconUser></IconUser>,
+    url: "/my-profile",
+    title: "My profile",
   },
   {
-    icon: <IconPodcast />,
-    url: "/podcasts",
+    icon: <IconUser></IconUser>,
+    url: "/tags",
+    title: "Tags",
   },
   {
-    icon: <IconInterview />,
-    url: "/interviews",
+    icon: <IconUser></IconUser>,
+    url: "/liked",
+    title: "Liked posts",
+  },
+  {
+    icon: <IconUser></IconUser>,
+    url: "/saved",
+    title: "Saved posts",
   },
 ];
 const widgetFilter = [

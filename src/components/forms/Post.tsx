@@ -86,7 +86,7 @@ function Post({ userId }: { userId: string }) {
                   <FormControl>
                     <Input
                       placeholder="Title..."
-                      className="py-3 px-5 bg-secondary-color-bg-2 font-bold text-2xl rounded-lg leading-normal h-auto dark:bg-dark4 dark:text-white"
+                      className="py-3 px-5 bg-secondary-color-bg-2 font-bold text-2xl rounded-lg leading-normal h-auto dark:bg-dark4 dark:text-white focus-visible:ring-0"
                       {...field}
                     />
                   </FormControl>
@@ -110,6 +110,15 @@ function Post({ userId }: { userId: string }) {
                       onBlur={field.onBlur}
                       onEditorChange={(content) => field.onChange(content)}
                       init={{
+                        skin: window.matchMedia("(prefers-color-scheme: dark)")
+                          .matches
+                          ? "oxide-dark"
+                          : "oxide",
+                        content_css: window.matchMedia(
+                          "(prefers-color-scheme: dark)"
+                        ).matches
+                          ? "dark"
+                          : "default",
                         height: 500,
                         menubar: false,
                         plugins: [
@@ -137,8 +146,8 @@ function Post({ userId }: { userId: string }) {
                           "bold italic forecolor | alignleft aligncenter " +
                           "alignright alignjustify | bullist numlist outdent indent | " +
                           "removeformat | help",
-                        content_style:
-                          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                        content_style: `
+                           body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px; }`,
                       }}
                     />
                   </FormControl>

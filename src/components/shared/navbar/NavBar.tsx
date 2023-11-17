@@ -1,7 +1,6 @@
 import { ModeToggle } from "@/components/ModeToggle";
 import IconMesssage from "@/components/icons/IconMesssage";
 import IconNoti from "@/components/icons/IconNoti";
-import { navLinks } from "@/constants";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,17 +16,7 @@ export const NavBar = () => {
           height={38}
         ></Image>
       </Link>
-      <div className="flex gap-5">
-        {navLinks.map((item, index) => (
-          <Link
-            href={item.url}
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-secondary-color-5 dark:text-white hover:bg-primary hover:text-white transition-all"
-            key={index}
-          >
-            {item.icon}
-          </Link>
-        ))}
-      </div>
+
       <div className="py-2 px-5 bg-secondary-color-6 w-full max-w-[440px] flex items-center justify-between gap-10 h-10 rounded-lg dark:bg-dark4 dark:text-white">
         <input
           type="text"

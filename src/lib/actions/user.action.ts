@@ -2,6 +2,7 @@
 
 import Post from "@/database/post.model";
 import User from "@/database/user.model";
+import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
 import {
@@ -57,4 +58,30 @@ export async function deleteUser(params: DeleteUserParams) {
   } catch (error) {
     console.log(error);
   }
+}
+export async function getUsers() {
+  try {
+    connectToDatabase();
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function followUser(followerId: string) {
+  console.log("file: user.action.ts:72 ~ followUser ~ followerId:", followerId);
+  try {
+    connectToDatabase();
+    const { userId } = auth();
+    const loggedInUser = await User.findOne({ clerkId: userId });
+    const loggedInId = loggedInUser._id.toString();
+
+    await User.findByIdAndUpdate(followerId, {
+      $addToSet: { followers: loggedInId },
+    });
+    await User.findByIdAndUpdate(loggedInId, {
+      $addToSet: { following: followerId },
+    });
+    revalidatePath(`/users`);
+  } catch (error) {}
 }
