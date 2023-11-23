@@ -1,20 +1,16 @@
-import Link from "next/link";
+import { homePageFilters } from "@/constants";
 
 function HomeFilters() {
   return (
-    <div className="p-5 bg-white rounded-2xl flex items-center gap-5 dark:bg-dark3">
-      <div className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0"></div>
-      <input
-        type="text"
-        placeholder="Let’s share what going on your mind..."
-        className="w-full outline-none p-3 bg-secondary-color-6 rounded-md text-sm dark:bg-dark4"
-      />
-      <Link
-        href="/create-post"
-        className="px-4 py-3 text-white text-sm font-medium bg-primary flex-shrink-0 rounded-md"
-      >
-        Create Post
-      </Link>
+    <div className="flex gap-5 flex-wrap">
+      {homePageFilters.map((filter) => (
+        <button
+          key={filter.name}
+          className="text-sm py-2 px-5 rounded-lg bg-white text-secondary-color-3 font-medium hover:text-primary hover:bg-primary hover:bg-opacity-10"
+        >
+          {filter.name}
+        </button>
+      ))}
     </div>
   );
 }

@@ -29,3 +29,18 @@ export interface UpdateUserParams {
 export interface DeleteUserParams {
   clerkId: string;
 }
+export interface GetAllUserParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+export interface GetAllTagParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+export interface GetPostByIdParams {
+  postId: string;
+}

@@ -26,3 +26,7 @@
 Trong Mongoose và MongoDB, `$each` là một toán tử được sử dụng với `$push` để thêm nhiều giá trị vào một mảng cụ thể trong một bản ghi.
 
 Khi bạn sử dụng `$push` với $each, bạn có thể thêm một mảng giá trị vào mảng đích. Điều này hữu ích khi bạn muốn thêm nhiều giá trị cùng một lúc vào một mảng.
+
+# .populate
+
+# $addToSet

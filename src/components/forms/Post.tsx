@@ -12,6 +12,7 @@ import { createPost } from "@/lib/actions/post.action";
 import { postSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
+import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,6 +21,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
 function Post({ userId }: { userId: string }) {
+  const { theme } = useTheme();
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -97,6 +99,20 @@ function Post({ userId }: { userId: string }) {
           />
           <FormField
             control={form.control}
+            name="image"
+            render={({ field }) => (
+              <>
+                <FormItem>
+                  <FormControl>
+                    <Input type="file" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              </>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="content"
             render={({ field }) => (
               <>
@@ -110,15 +126,7 @@ function Post({ userId }: { userId: string }) {
                       onBlur={field.onBlur}
                       onEditorChange={(content) => field.onChange(content)}
                       init={{
-                        skin: window.matchMedia("(prefers-color-scheme: dark)")
-                          .matches
-                          ? "oxide-dark"
-                          : "oxide",
-                        content_css: window.matchMedia(
-                          "(prefers-color-scheme: dark)"
-                        ).matches
-                          ? "dark"
-                          : "default",
+                        skin: theme === "dark" ? "oxide-dark" : "oxide",
                         height: 500,
                         menubar: false,
                         plugins: [
@@ -132,20 +140,16 @@ function Post({ userId }: { userId: string }) {
                           "anchor",
                           "searchreplace",
                           "visualblocks",
-                          "code",
+                          "codesample",
                           "fullscreen",
                           "insertdatetime",
                           "media",
                           "table",
-                          "code",
-                          "help",
-                          "wordcount",
                         ],
                         toolbar:
-                          "undo redo | blocks | " +
-                          "bold italic forecolor | alignleft aligncenter " +
-                          "alignright alignjustify | bullist numlist outdent indent | " +
-                          "removeformat | help",
+                          "undo redo | " +
+                          "codesample | bold italic forecolor | alignleft aligncenter |" +
+                          "alignright alignjustify | bullist numlist",
                         content_style: `
                            body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px; }`,
                       }}

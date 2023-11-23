@@ -1,3 +1,4 @@
+import { NavBar } from "@/components/shared/navbar/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -26,7 +27,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <NavBar />
+            <div className="py-5 px-10">{children}</div>
           </ThemeProvider>
         </body>
       </html>

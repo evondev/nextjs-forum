@@ -1,4 +1,5 @@
 import IconHome from "@/components/icons/IconHome";
+import IconTag from "@/components/icons/IconTag";
 import IconUser from "@/components/icons/IconUser";
 
 const navLinks: {
@@ -16,43 +17,40 @@ const navLinks: {
     url: "/users",
     title: "All users",
   },
+  // {
+  //   icon: <IconUser></IconUser>,
+  //   url: "/my-profile",
+  //   title: "My profile",
+  // },
   {
-    icon: <IconUser></IconUser>,
-    url: "/my-profile",
-    title: "My profile",
-  },
-  {
-    icon: <IconUser></IconUser>,
+    icon: <IconTag></IconTag>,
     url: "/tags",
     title: "Tags",
   },
-  {
-    icon: <IconUser></IconUser>,
-    url: "/liked",
-    title: "Liked posts",
-  },
-  {
-    icon: <IconUser></IconUser>,
-    url: "/saved",
-    title: "Saved posts",
-  },
+  // {
+  //   icon: <IconUser></IconUser>,
+  //   url: "/liked",
+  //   title: "Liked posts",
+  // },
+  // {
+  //   icon: <IconUser></IconUser>,
+  //   url: "/saved",
+  //   title: "Saved posts",
+  // },
 ];
-const widgetFilter = [
+const homePageFilters = [
   {
-    icon: "/icons/icon-star.svg",
-    title: "Newest and Recent",
-    desc: "Find the latest update",
+    name: "Newest",
+    value: "newest",
   },
   {
-    icon: "/icons/icon-popular.svg",
-    title: "Popular of the day",
-    desc: "Shots featured today by curators",
+    name: "Popular",
+    value: "popular",
   },
   {
-    icon: "/icons/icon-follow.svg",
-    title: "Following",
-    desc: "Explore from your favorite person",
+    name: "Following",
+    value: "following",
   },
 ];
 
-export { navLinks, widgetFilter };
+export { homePageFilters, navLinks };

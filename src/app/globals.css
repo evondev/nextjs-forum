@@ -8,4 +8,22 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  svg {
+    @apply max-w-full;
+  }
+}
+@layer components {
+  input {
+    @apply bg-transparent outline-none focus:ring-0;
+  }
+  .post-content {
+    & p {
+      @apply mb-5 text-secondary-color-3;
+    }
+  }
+}
+@layer utilities {
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
 }

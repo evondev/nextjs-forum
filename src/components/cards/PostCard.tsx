@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /* eslint-disable @next/next/no-img-element */
 interface PostProps {
   _id: string;
@@ -29,7 +31,10 @@ function PostCard({
   createdAt,
 }: PostProps) {
   return (
-    <div className="bg-white p-5 rounded-2xl flex items-center gap-5 relative dark:bg-dark3">
+    <Link
+      href={`/post/${_id}`}
+      className="bg-white p-5 rounded-2xl flex items-center gap-5 relative dark:bg-dark3"
+    >
       <img
         src="https://plus.unsplash.com/premium_photo-1696879453950-a121fad02642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5OTk4MjY4MA&ixlib=rb-4.0.3&q=80&w=1080"
         alt=""
@@ -85,7 +90,7 @@ function PostCard({
           />
         </svg>
       </button>
-    </div>
+    </Link>
   );
 }
 

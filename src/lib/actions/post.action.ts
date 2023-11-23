@@ -4,7 +4,11 @@ import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
-import { CreatePostParams, GetPostParams } from "./shared.types";
+import {
+  CreatePostParams,
+  GetPostByIdParams,
+  GetPostParams,
+} from "./shared.types";
 
 export async function getPosts(params: GetPostParams) {
   try {
@@ -56,5 +60,24 @@ export async function createPost({
     revalidatePath(path || "/");
   } catch (error) {
     console.log("file: post.action.ts:41 ~ error:", error);
+  }
+}
+export async function getPostById(params: GetPostByIdParams) {
+  try {
+    connectToDatabase();
+    const post = await Post.findById(params.postId)
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: "_id name",
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name email avatar",
+      });
+    return post;
+  } catch (error) {
+    console.log(error);
   }
 }
