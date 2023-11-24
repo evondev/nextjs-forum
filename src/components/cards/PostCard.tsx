@@ -19,6 +19,7 @@ interface PostProps {
   };
   comments: string[];
   likes: string[];
+  votes: string[];
   views: number;
   createdAt: Date;
   clerkId?: string | null;
@@ -34,6 +35,7 @@ function PostCard({
   comments,
   views,
   createdAt,
+  votes,
 }: PostProps) {
   return (
     <Link
@@ -75,8 +77,9 @@ function PostCard({
             </div>
           </div>
           <div className="flex items-center gap-5 text-secondary-color-3 text-[10px] @[600px]:text-sm dark:text-secondary-color-5">
-            <div>{views} Views</div>
-            <div>{likes.length} Likes</div>
+            <div>{votes.length} votes</div>
+            <div>{views} views</div>
+            <div>{likes.length} likes</div>
             <div>{comments.length} comments</div>
           </div>
         </div>

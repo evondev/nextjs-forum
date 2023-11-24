@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   body {
-    @apply bg-secondary-color-bg-2 dark:bg-dark2 text-dark2 dark:text-white mx-auto w-full p-0;
+    @apply bg-secondary-color-bg-2 dark:bg-dark2 text-secondary-color-2 dark:text-white mx-auto w-full p-0;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -23,6 +23,12 @@
 @layer utilities {
   .no-focus {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+  .bgWhite_darkBgDark3 {
+    @apply bg-white dark:bg-dark3;
+  }
+  .flexBetween {
+    @apply flex justify-between items-center;
   }
 }
 

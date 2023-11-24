@@ -25,14 +25,16 @@ export async function createComment(params: CreateCommentParams) {
     console.log(error);
   }
 }
-export async function getAllCommentsByPostId(params: any) {
+export async function getComments(params: any) {
   try {
     connectToDatabase();
-    const comments = await Comment.find({ post: params.postId }).populate({
-      path: "author",
-      model: User,
-      select: "username avatar",
-    });
+    const comments = await Comment.find({ post: params.postId })
+      .populate({
+        path: "author",
+        model: User,
+        select: "username avatar clerkId",
+      })
+      .sort({ createdAt: -1 });
     return comments;
   } catch (error: any) {
     console.log(error);

@@ -8,6 +8,7 @@ import {
   CreatePostParams,
   GetPostByIdParams,
   GetPostParams,
+  PostVoteParams,
 } from "./shared.types";
 
 export async function getPosts(params: GetPostParams) {
@@ -79,5 +80,63 @@ export async function getPostById(params: GetPostByIdParams) {
     return post;
   } catch (error) {
     console.log(error);
+  }
+}
+export async function upvotePost(params: PostVoteParams) {
+  try {
+    connectToDatabase();
+    const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
+    let updateQuery = {};
+    if (hasUpvoted) {
+      updateQuery = { $pull: { upvotes: userId } };
+    } else if (hasDownvoted) {
+      updateQuery = {
+        $pull: {
+          downvotes: userId,
+        },
+        $push: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    // Increment author reputation
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+export async function downvotePost(params: PostVoteParams) {
+  try {
+    connectToDatabase();
+    const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
+    let updateQuery = {};
+    if (hasDownvoted) {
+      updateQuery = { $pull: { downvotes: userId } };
+    } else if (hasUpvoted) {
+      updateQuery = {
+        $pull: {
+          upvotes: userId,
+        },
+        $push: { downvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    // Increment author reputation
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
   }
 }

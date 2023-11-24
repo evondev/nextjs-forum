@@ -50,3 +50,10 @@ export interface CreateCommentParams {
   post: string;
   path: string;
 }
+export interface PostVoteParams {
+  postId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}
