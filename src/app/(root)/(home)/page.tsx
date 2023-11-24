@@ -35,6 +35,7 @@ async function Home() {
               comments={post.comments}
               votes={post.upvotes}
               createdAt={post.createdAt}
+              cover={post.cover}
             />
           ))}
         </div>

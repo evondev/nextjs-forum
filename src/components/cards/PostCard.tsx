@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import ButtonLike from "../buttons/ButtonLike";
 import ButtonSave from "../buttons/ButtonSave";
@@ -11,6 +12,7 @@ interface PostProps {
     _id: string;
     name: string;
   }[];
+  cover: string;
   author: {
     _id: string;
     name: string;
@@ -36,17 +38,21 @@ function PostCard({
   views,
   createdAt,
   votes,
+  cover,
 }: PostProps) {
   return (
     <Link
       href={`/post/${_id}`}
       className="bg-white p-5 rounded-2xl flex items-start gap-5 relative dark:bg-dark3"
     >
-      <img
-        src="https://plus.unsplash.com/premium_photo-1696879453950-a121fad02642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5OTk4MjY4MA&ixlib=rb-4.0.3&q=80&w=1080"
-        alt=""
-        className="w-14 @[600px]:w-[156px] contain aspect-square rounded @[600px]:rounded-2xl object-cover flex-shrink-0"
-      />
+      <div className="relative w-14 @[600px]:w-[156px] contain aspect-square  flex-shrink-0">
+        <Image
+          src={cover}
+          alt=""
+          className="w-full h-full rounded @[600px]:rounded-2xl object-cover"
+          fill
+        />
+      </div>
       <div className="flex-1 flex flex-col justify-between self-stretch">
         <div>
           <div className="flex items-center gap-5 mb-2.5">

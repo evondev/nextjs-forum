@@ -13,6 +13,7 @@ export interface CreatePostParams {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path?: string;
+  cover?: string;
 }
 export interface CreateUserParams {
   clerkId: string;
@@ -20,6 +21,8 @@ export interface CreateUserParams {
   username: string;
   email: string;
   avatar: string;
+  joinedAt?: Date;
+  bio?: string;
 }
 export interface UpdateUserParams {
   clerkId: string;
@@ -43,6 +46,9 @@ export interface GetAllTagParams {
 }
 export interface GetPostByIdParams {
   postId: string;
+}
+export interface GetPostByUserIdParams {
+  userId: string;
 }
 export interface CreateCommentParams {
   content: string;

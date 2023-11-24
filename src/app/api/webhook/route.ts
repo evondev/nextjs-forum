@@ -64,6 +64,8 @@ export async function POST(req: Request) {
       username: username! || slugify(`${first_name}${last_name}`),
       email: email_addresses[0].email_address,
       avatar: image_url,
+      joinedAt: new Date(),
+      bio: "User at Hipnode",
     });
     return NextResponse.json({ message: "OK", user: mongoUser });
   } else if (eventType === "user.updated") {

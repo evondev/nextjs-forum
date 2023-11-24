@@ -7,6 +7,7 @@ import { connectToDatabase } from "../mongoose";
 import {
   CreatePostParams,
   GetPostByIdParams,
+  GetPostByUserIdParams,
   GetPostParams,
   PostVoteParams,
 } from "./shared.types";
@@ -36,6 +37,7 @@ export async function createPost({
   tags,
   author,
   path,
+  cover,
 }: CreatePostParams) {
   try {
     connectToDatabase();
@@ -43,6 +45,9 @@ export async function createPost({
       title,
       content,
       author,
+      cover:
+        cover ||
+        "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?q=80&w=5047&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     });
     const tagDocuments = [];
     for (const tag of tags) {
@@ -75,9 +80,32 @@ export async function getPostById(params: GetPostByIdParams) {
       .populate({
         path: "author",
         model: User,
-        select: "_id clerkId name email avatar",
+        select: "_id clerkId name email avatar username bio posts",
       });
+    // update post views count when visit
+    await Post.findByIdAndUpdate(params.postId, {
+      $inc: { views: 1 },
+    });
     return post;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getPostsByUserId(params: GetPostByUserIdParams) {
+  try {
+    connectToDatabase();
+    const posts = await Post.find({ author: params.userId })
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: "_id name",
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: "username name",
+      });
+    return posts;
   } catch (error) {
     console.log(error);
   }

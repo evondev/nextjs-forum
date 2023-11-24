@@ -2,7 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 export interface IPost extends Document {
   title: string;
   content: string;
-  avatar: string;
+  cover: string;
   tags: Schema.Types.ObjectId[];
   views: number;
   likes: Schema.Types.ObjectId[];
@@ -22,7 +22,7 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  avatar: {
+  cover: {
     type: String,
     default: "https://source.unsplash.com/random",
   },

@@ -4,7 +4,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import "./globals.scss";
+import "./nord.css";
 
 const inter = DM_Sans({ subsets: ["latin"] });
 
