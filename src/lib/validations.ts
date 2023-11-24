@@ -6,5 +6,8 @@ const postSchema = z.object({
   tags: z.array(z.string().min(3).max(20)).min(1).max(5),
   image: z.string(),
 });
+const commentSchema = z.object({
+  comment: z.string().min(5).max(1000),
+});
 
-export { postSchema };
+export { commentSchema, postSchema };

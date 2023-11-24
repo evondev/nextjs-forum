@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const NavBar = () => {
   return (
-    <div className="bg-white py-5 px-10 flex items-center justify-between dark:bg-dark3">
+    <div className="bg-white py-5 px-10 flex items-center justify-between dark:bg-dark3 sticky top-0 z-50">
       <Link href="/">
         <Image
           src="/images/logo.png"
@@ -17,7 +17,7 @@ export const NavBar = () => {
         ></Image>
       </Link>
 
-      <div className="py-2 px-5 bg-secondary-color-6 w-full max-w-[440px] flex items-center justify-between gap-10 h-10 rounded-lg dark:bg-dark4 dark:text-white">
+      <div className="py-2 px-5 bg-secondary-color-6 w-full max-w-[440px] flex items-center justify-between gap-10 h-10 rounded-lg dark:bg-dark4 dark:text-white max-lg:hidden">
         <input
           type="text"
           placeholder="Type here to search..."
@@ -40,12 +40,12 @@ export const NavBar = () => {
         </svg>
       </div>
       <div className="flex items-center gap-6">
-        <div className="w-10 h-10 rouned-lg flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
+        {/* <div className="w-10 h-10 rouned-lg flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
           <IconMesssage />
         </div>
         <div className="w-10 h-10 flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
           <IconNoti />
-        </div>
+        </div> */}
         <div className="w-10 h-10 rouned-lg flex items-center justify-center rounded-lg">
           <UserButton></UserButton>
         </div>

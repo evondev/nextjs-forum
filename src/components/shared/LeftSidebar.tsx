@@ -7,7 +7,7 @@ import ActiveLink from "./active-link/ActiveLink";
 function LeftSidebar() {
   const { isSignedIn } = useAuth();
   return (
-    <div className="flex flex-col gap-10 dark:bg-dark3 rounded-2xl p-5 bg-white sticky top-5 left-0">
+    <div className="flex flex-col gap-10 dark:bg-dark3 rounded-2xl p-5 bg-white sticky top-[100px] left-0 max-lg:hidden">
       <div className="flex flex-col gap-3">
         {navLinks.map((link) => (
           <ActiveLink

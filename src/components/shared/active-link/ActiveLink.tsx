@@ -17,7 +17,7 @@ function ActiveLink({
   const activeClassName =
     pathname === href
       ? "bg-primary font-medium text-white"
-      : "hover:bg-gray-100";
+      : "hover:bg-gray-100 dark:hover:bg-dark4 dark:text-white";
   return (
     <Link
       href={href}

@@ -16,14 +16,22 @@
   input {
     @apply bg-transparent outline-none focus:ring-0;
   }
-  .post-content {
-    & p {
-      @apply mb-5 text-secondary-color-3;
-    }
+  .post-content p {
+    @apply mb-5 text-secondary-color-3;
   }
 }
 @layer utilities {
   .no-focus {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+}
+
+.post-container {
+  container-type: inline-size;
+  container-name: post-container;
+}
+@container post-container (max-width: 590px) {
+  .post-card-author {
+    @apply hidden;
   }
 }

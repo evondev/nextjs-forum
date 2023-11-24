@@ -6,25 +6,31 @@ import { getPosts } from "@/lib/actions/post.action";
 async function Home() {
   const result = await getPosts({});
   return (
-    <div className="flex flex-col gap-5">
-      <Search
-        route="/"
-        placeholder="Search for posts"
-        className="flex-1"
-      ></Search>
-      <HomeFilters></HomeFilters>
-      {result?.posts.map((post, index) => (
-        <PostCard
-          key={post._id}
-          _id={post._id}
-          title={post.title}
-          tags={post.tags}
-          author={post.author}
-          upvotes={post.upvotes}
-          views={post.views}
-          createdAt={post.createdAt}
-        />
-      ))}
+    <div className="grid xl:grid-cols-[1fr_300px] gap-5">
+      <div className="flex flex-col gap-5">
+        <Search
+          route="/"
+          placeholder="Search for posts"
+          className="flex-1"
+        ></Search>
+        <HomeFilters></HomeFilters>
+        <div className="@container">
+          {result?.posts.map((post, index) => (
+            <PostCard
+              key={post._id}
+              _id={post._id}
+              title={post.title}
+              tags={post.tags}
+              author={post.author}
+              likes={post.likes}
+              views={post.views}
+              comments={post.comments}
+              createdAt={post.createdAt}
+            />
+          ))}
+        </div>
+      </div>
+      <div></div>
     </div>
   );
 }

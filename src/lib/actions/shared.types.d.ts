@@ -44,3 +44,9 @@ export interface GetAllTagParams {
 export interface GetPostByIdParams {
   postId: string;
 }
+export interface CreateCommentParams {
+  content: string;
+  author: string;
+  post: string;
+  path: string;
+}

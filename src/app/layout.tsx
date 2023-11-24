@@ -2,10 +2,11 @@ import { NavBar } from "@/components/shared/navbar/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,7 +29,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <NavBar />
-            <div className="py-5 px-10">{children}</div>
+            <div className="py-5 px-5 lg:px-10">{children}</div>
           </ThemeProvider>
         </body>
       </html>
