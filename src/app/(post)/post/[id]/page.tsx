@@ -35,8 +35,8 @@ async function PostDetailsPage({
   }
   if (!post) return null;
   return (
-    <div className="grid grid-cols-[250px_1fr_320px] gap-10 items-start max-w-[1440px] mx-auto">
-      <div className="bg-white dark:bg-dark3 p-5 rounded-lg flex flex-col gap-5 sticky top-[100px]">
+    <div className="flex flex-col lg:grid lg:grid-cols-[250px_1fr_320px] gap-10 lg:items-start max-w-[1440px] mx-auto">
+      <div className="bg-white dark:bg-dark3 p-5 rounded-lg flex flex-col gap-5 sticky top-[100px] max-lg:order-2">
         <ActionBarItem icon={<IconHeart />} text="0 hearts"></ActionBarItem>
         <ActionBarItem icon={<IconHeart />} text="0 bookmarks"></ActionBarItem>
         <ActionBarItem
@@ -49,7 +49,7 @@ async function PostDetailsPage({
         ></ActionBarItem>
       </div>
       <div className="bg-white dark:bg-dark3 rounded-lg overflow-hidden p-5">
-        <div className="relative h-[275px]">
+        <div className="relative h-40 lg:h-[275px]">
           <Image
             src="https://images.unsplash.com/photo-1682687220923-c58b9a4592ae?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
@@ -68,7 +68,7 @@ async function PostDetailsPage({
         <div className="py-5">
           <div className="flex flex-col">
             <div className="flex items-start gap-5 mb-5 justify-between">
-              <h1 className="font-bold  text-3xl">{post.title}</h1>
+              <h1 className="font-bold text-xl lg:text-3xl">{post.title}</h1>
               <Votes
                 type="post"
                 itemId={JSON.stringify(post._id)}
@@ -79,7 +79,7 @@ async function PostDetailsPage({
                 hasDownvoted={post.downvotes.includes(mongoUser?._id)}
               ></Votes>
             </div>
-            <div className="flex items-center gap-10 mb-5">
+            <div className="flex items-center gap-2 lg:gap-10 mb-5 whitespace-nowrap">
               <MetaItem
                 icon="/icons/icon-clock.svg"
                 text={<>{getTimestamp(post.createdAt)}</>}
@@ -118,7 +118,7 @@ async function PostDetailsPage({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 order-3">
         <div className="bgWhite_darkBgDark3 rounded-lg p-5 flex flex-col items-center">
           <div className="w-20 h-20 rounded-full bg-gray-100 mb-3"></div>
           <h3 className="text-xl font-semibold">Evondev</h3>

@@ -60,7 +60,7 @@ const AllComments = async ({
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="items-center gap-2 flex-shrink-0 hidden lg:flex">
                   <Votes
                     type="comment"
                     downvotes={comment.downvotes.length}

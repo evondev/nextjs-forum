@@ -54,7 +54,7 @@ const Votes = ({
     }
   };
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-2">
       <button
         type="button"
         className={twMerge(
