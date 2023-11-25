@@ -1,3 +1,5 @@
+import IconBookmark from "@/components/icons/IconBookmark";
+import IconHeart from "@/components/icons/IconHeart";
 import IconHome from "@/components/icons/IconHome";
 import IconTag from "@/components/icons/IconTag";
 import IconUser from "@/components/icons/IconUser";
@@ -27,16 +29,16 @@ const navLinks: {
     url: "/tags",
     title: "Tags",
   },
-  // {
-  //   icon: <IconUser></IconUser>,
-  //   url: "/liked",
-  //   title: "Liked posts",
-  // },
-  // {
-  //   icon: <IconUser></IconUser>,
-  //   url: "/saved",
-  //   title: "Saved posts",
-  // },
+  {
+    icon: <IconHeart></IconHeart>,
+    url: "/liked",
+    title: "Liked posts",
+  },
+  {
+    icon: <IconBookmark></IconBookmark>,
+    url: "/saved",
+    title: "Saved posts",
+  },
 ];
 const homePageFilters = [
   {

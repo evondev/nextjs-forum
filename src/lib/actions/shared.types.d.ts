@@ -63,3 +63,10 @@ export interface PostVoteParams {
   hasDownvoted: boolean;
   path: string;
 }
+export interface CommentVoteParams {
+  commentId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}

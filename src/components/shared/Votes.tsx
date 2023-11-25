@@ -1,4 +1,5 @@
 "use client";
+import { downvoteComment, upvoteComment } from "@/lib/actions/comment.action";
 import { downvotePost, upvotePost } from "@/lib/actions/post.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -37,6 +38,14 @@ const Votes = ({
           hasDownvoted,
           path: pathname,
         });
+      } else if (type === "comment") {
+        await upvoteComment({
+          commentId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
       }
       toast.success("Upvoted successfully");
     }
@@ -44,6 +53,14 @@ const Votes = ({
       if (type === "post") {
         await downvotePost({
           postId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
+      } else if (type === "comment") {
+        await downvoteComment({
+          commentId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasUpvoted,
           hasDownvoted,

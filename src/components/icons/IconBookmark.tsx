@@ -1,12 +1,15 @@
-const IconBookmark = () => {
+const IconBookmark = ({ fill }: { fill?: boolean }) => {
+  const props = {
+    fill: fill ? "#00aefd" : "none",
+    stroke: fill ? "#00aefd" : "currentColor",
+  };
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
       className="w-6 h-6"
+      {...props}
     >
       <path
         strokeLinecap="round"

@@ -67,8 +67,8 @@ const AllComments = async ({
                     hasDownvoted={comment.downvotes.includes(userId)}
                     hasUpvoted={comment.upvotes.includes(userId)}
                     upvotes={comment.upvotes.length}
-                    userId={userId}
-                    itemId={postId}
+                    userId={JSON.stringify(userId)}
+                    itemId={JSON.stringify(comment._id)}
                   ></Votes>
                 </div>
               </div>

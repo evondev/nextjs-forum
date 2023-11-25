@@ -1,7 +1,10 @@
 import Comment from "@/components/forms/Comment";
 import IconBookmark from "@/components/icons/IconBookmark";
 import IconHeart from "@/components/icons/IconHeart";
+import IconThumbDown from "@/components/icons/IconThumbDown";
+import IconThumbUp from "@/components/icons/IconThumbUp";
 import ActionBarItem from "@/components/shared/ActionBarItem";
+import Actions from "@/components/shared/Actions";
 import AllComments from "@/components/shared/AllComments";
 import MetaItem from "@/components/shared/MetaItem";
 import ParseHTML from "@/components/shared/ParseHTML";
@@ -38,14 +41,20 @@ async function PostDetailsPage({
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[250px_1fr_320px] gap-10 lg:items-start max-w-[1440px] mx-auto">
       <div className="bg-white dark:bg-dark3 p-5 rounded-lg flex flex-col gap-5 sticky top-[100px] max-lg:order-2">
-        <ActionBarItem icon={<IconHeart />} text="0 hearts"></ActionBarItem>
-        <ActionBarItem icon={<IconHeart />} text="0 bookmarks"></ActionBarItem>
         <ActionBarItem
-          icon={<IconHeart />}
+          icon={<IconHeart fill />}
+          text={<>{post?.likes.length} hearts</>}
+        ></ActionBarItem>
+        <ActionBarItem
+          icon={<IconBookmark fill />}
+          text="0 bookmarks"
+        ></ActionBarItem>
+        <ActionBarItem
+          icon={<IconThumbUp className="text-green-500" />}
           text={<>{post.upvotes.length} upvotes</>}
         ></ActionBarItem>
         <ActionBarItem
-          icon={<IconHeart />}
+          icon={<IconThumbDown className="text-red-500" />}
           text={<>{post.downvotes.length} downvotes</>}
         ></ActionBarItem>
       </div>
@@ -57,14 +66,12 @@ async function PostDetailsPage({
             fill
             className="w-full h-full object-cover rounded"
           ></Image>
-          <div className="absolute top-5 right-5 bg-white dark:bg-dark3 p-2 rounded-lg flex items-center gap-3">
-            <button>
-              <IconHeart></IconHeart>
-            </button>
-            <button>
-              <IconBookmark></IconBookmark>
-            </button>
-          </div>
+          <Actions
+            itemId={JSON.stringify(post._id)}
+            userId={JSON.stringify(mongoUser?._id)}
+            hasLiked={post.likes.includes(mongoUser?._id)}
+            hasSaved={post.saves.includes(mongoUser?._id)}
+          ></Actions>
         </div>
         <div className="py-5">
           <div className="flex flex-col">
@@ -107,7 +114,7 @@ async function PostDetailsPage({
             </div>
             <ParseHTML data={post.content}></ParseHTML>
             <AllComments
-              userId={JSON.stringify(mongoUser?._id)}
+              userId={mongoUser?._id}
               totalComments={post.comments.length}
               postId={post._id}
             ></AllComments>

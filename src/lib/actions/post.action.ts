@@ -168,3 +168,50 @@ export async function downvotePost(params: PostVoteParams) {
     throw error;
   }
 }
+export async function likedPost(params: any) {
+  try {
+    connectToDatabase();
+    const { postId, userId, hasLiked, path } = params;
+    let updateQuery = {};
+    if (hasLiked) {
+      updateQuery = { $pull: { likes: userId } };
+      await User.findByIdAndUpdate(userId, {
+        $pull: { liked: postId },
+      });
+    } else {
+      updateQuery = { $addToSet: { likes: userId } };
+      await User.findByIdAndUpdate(userId, {
+        $push: { liked: postId },
+      });
+    }
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    // Increment author reputation
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+export async function getPostsByLikedUser() {
+  try {
+    connectToDatabase();
+    const posts = await Post.find({ likes: { $exists: true, $ne: [] } })
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: "_id name",
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: "username name",
+      });
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}

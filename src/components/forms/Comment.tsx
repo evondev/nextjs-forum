@@ -104,7 +104,7 @@ const Comment = ({
                           "codesample | bold italic forecolor | alignleft aligncenter |" +
                           "alignright alignjustify | bullist numlist",
                         content_style: `
-                           body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px; line-height: 2; }`,
+                           body { font-family: DM sans, Inter,Helvetica,Arial,sans-serif; font-size:14px; line-height: 2; }`,
                       }}
                     />
                   </FormControl>
