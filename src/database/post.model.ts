@@ -2,6 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 export interface IPost extends Document {
   title: string;
   content: string;
+  desc: string;
   tags: Schema.Types.ObjectId[];
   views: number;
   likes: Schema.Types.ObjectId[];
@@ -20,6 +21,9 @@ const PostSchema = new Schema({
   content: {
     type: String,
     required: true,
+  },
+  desc: {
+    type: String,
   },
   tags: [
     {
@@ -59,12 +63,10 @@ const PostSchema = new Schema({
       ref: "Comment",
     },
   ],
-  topic: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Topic",
-    },
-  ],
+  topic: {
+    type: Schema.Types.ObjectId,
+    ref: "Topic",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

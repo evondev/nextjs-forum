@@ -4,6 +4,7 @@ import Link from "next/link";
 import IconComment from "../icons/IconComment";
 import IconDate from "../icons/IconDate";
 import IconHeart from "../icons/IconHeart";
+import Votes from "../shared/Votes";
 
 /* eslint-disable @next/next/no-img-element */
 interface PostProps {
@@ -13,7 +14,6 @@ interface PostProps {
     _id: string;
     name: string;
   }[];
-  cover: string;
   author: {
     _id: string;
     name: string;
@@ -23,46 +23,32 @@ interface PostProps {
   comments: string[];
   likes: string[];
   votes: string[];
-  views: number;
   createdAt: Date;
-  clerkId?: string | null;
+  userId: string;
+  desc: string;
 }
 
 function PostCard({
-  clerkId,
+  userId,
   _id,
   title,
   tags,
   author,
   likes,
   comments,
-  views,
   createdAt,
   votes,
-  cover,
+  desc,
 }: PostProps) {
   return (
     <Link href={`/post/${_id}`} className="flex items-start gap-3">
-      <div
-        className="flex flex-col gap-1 items-center
-      "
-      >
-        <button className="flex items-center justify-center rounded-full w-5 h-5 border bg-gray-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-5 h-5"
-          >
-            <path
-              fillRule="evenodd"
-              d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-        <span className="text-xs font-semibold">{votes.length}</span>
-      </div>
+      <Votes
+        type="post"
+        itemId={_id}
+        votes={votes.length}
+        userId={userId}
+        hasVoted={votes.includes(userId)}
+      ></Votes>
       <Image
         src={author?.avatar}
         alt=""
@@ -92,12 +78,7 @@ function PostCard({
             </div>
           </div>
         </div>
-        <p className="text-secondary-color-3 text-sm line-clamp-2">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque natus,
-          temporibus vero eveniet dolorem nihil. Alias repellat, nobis
-          dignissimos libero neque non architecto laudantium suscipit excepturi
-          eligendi? At, atque excepturi!
-        </p>
+        <p className="text-secondary-color-3 text-sm line-clamp-2">{desc}</p>
         {/* <div>
           <div className="flex items-center gap-5 mb-2.5">
             <div className="flex ml-auto items-center gap-3">

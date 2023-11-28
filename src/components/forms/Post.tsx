@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createPost } from "@/lib/actions/post.action";
+import { CreateTopicParams } from "@/lib/actions/shared.types";
 import { postSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -28,7 +29,13 @@ import {
   SelectValue,
 } from "../ui/select";
 
-function Post({ userId }: { userId: string }) {
+function Post({
+  userId,
+  topics,
+}: {
+  userId: string;
+  topics: CreateTopicParams[] | undefined;
+}) {
   const { theme } = useTheme();
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof postSchema>>({
@@ -37,6 +44,8 @@ function Post({ userId }: { userId: string }) {
       title: "",
       content: "",
       tags: [],
+      topic: "",
+      desc: "",
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +59,8 @@ function Post({ userId }: { userId: string }) {
         content: values.content,
         tags: values.tags,
         author: JSON.parse(userId),
+        topic: values.topic,
+        desc: values.desc,
       });
       router.push("/");
     } catch (error) {
@@ -107,12 +118,34 @@ function Post({ userId }: { userId: string }) {
           />
           <FormField
             control={form.control}
+            name="desc"
+            render={({ field }) => (
+              <>
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Description (optional)"
+                      className="no-focus p-4 h-12"
+                      required={false}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              </>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="topic"
             render={({ field }) => (
               <>
                 <FormItem>
                   <FormControl>
-                    <Select>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <SelectTrigger className="h-12">
                         <div className="line-clamp-1 flex-1 text-left">
                           <SelectValue placeholder="Select a topic" />
@@ -120,12 +153,16 @@ function Post({ userId }: { userId: string }) {
                       </SelectTrigger>
                       <SelectContent className="bg-white">
                         <SelectGroup>
-                          <SelectItem
-                            value="gaming"
-                            className="hover:bg-gray-100"
-                          >
-                            Gaming
-                          </SelectItem>
+                          {topics &&
+                            topics.map((topic) => (
+                              <SelectItem
+                                className="hover:bg-gray-100"
+                                key={topic.name}
+                                value={topic._id!}
+                              >
+                                {topic.name}
+                              </SelectItem>
+                            ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>

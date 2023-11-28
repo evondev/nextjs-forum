@@ -1,9 +1,18 @@
 import PostCard from "@/components/cards/PostCard";
 import PopularTopics from "@/components/shared/PopularTopics";
 import { getPosts } from "@/lib/actions/post.action";
+import { getUserById } from "@/lib/actions/user.action";
+import { auth } from "@clerk/nextjs";
 
 async function Home() {
   const result = await getPosts({});
+  const { userId: clerkId } = auth();
+  let mongoUser: any;
+  if (clerkId) {
+    mongoUser = await getUserById({
+      userId: clerkId,
+    });
+  }
   return (
     <div className="grid xl:grid-cols-[1fr_300px] gap-5">
       <div>
@@ -20,11 +29,11 @@ async function Home() {
                   tags={post.tags}
                   author={post.author}
                   likes={post.likes}
-                  views={post.views}
                   comments={post.comments}
-                  votes={post.upvotes}
+                  votes={post.votes}
                   createdAt={post.createdAt}
-                  cover={post.cover}
+                  userId={JSON.stringify(mongoUser?._id)}
+                  desc={post.desc}
                 />
               ))}
             </div>

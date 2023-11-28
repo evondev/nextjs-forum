@@ -31,4 +31,5 @@ const TopicSchema = new Schema({
   },
 });
 
-export default models.Topic || model<ITopic>("Topic", TopicSchema);
+const Topic = models.Topic || model("Topic", TopicSchema);
+export default Topic;

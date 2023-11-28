@@ -13,6 +13,8 @@ export interface CreatePostParams {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path?: string;
+  topic?: string;
+  desc?: string;
 }
 export interface CreateUserParams {
   clerkId: string;
@@ -68,4 +70,11 @@ export interface CommentVoteParams {
   hasUpvoted: boolean;
   hasDownvoted: boolean;
   path: string;
+}
+export interface CreateTopicParams {
+  _id?: string;
+  name: string;
+  value: string;
+  icon: string;
+  desc: string;
 }
