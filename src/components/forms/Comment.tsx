@@ -60,7 +60,6 @@ const Comment = ({
   };
   return (
     <div>
-      <h3 className="font-bold text-lg mb-5">Write your comment</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleCreateComment)}>
           <FormField
@@ -80,7 +79,7 @@ const Comment = ({
                       init={{
                         skin: theme === "dark" ? "oxide-dark" : "oxide",
                         content_css: theme === "dark" ? "dark" : "light",
-                        height: 500,
+                        height: 200,
                         menubar: false,
                         plugins: [
                           "advlist",
@@ -119,7 +118,7 @@ const Comment = ({
             className="text-white w-full p-3 font-semibold"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Posting comment..." : "Post comment"}
+            {isSubmitting ? "Replying..." : "Reply"}
           </Button>
         </form>
       </Form>

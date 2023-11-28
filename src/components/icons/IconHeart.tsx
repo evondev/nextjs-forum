@@ -1,4 +1,10 @@
-const IconHeart = ({ fill }: { fill?: boolean }) => {
+const IconHeart = ({
+  fill,
+  className = "",
+}: {
+  fill?: boolean;
+  className?: string;
+}) => {
   const props = {
     fill: fill ? "#f00" : "none",
     stroke: fill ? "#f00" : "currentColor",
@@ -8,7 +14,7 @@ const IconHeart = ({ fill }: { fill?: boolean }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      className="w-6 h-6"
+      className={className}
       {...props}
     >
       <path

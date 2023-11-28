@@ -1,14 +1,18 @@
 import Image from "next/image";
 
 interface MetaItemProps {
-  icon: string;
+  icon: React.ReactNode | string;
   text: React.ReactNode;
 }
 const MetaItem = ({ icon, text }: MetaItemProps) => {
   return (
     <div className="flex items-center gap-2 text-xs lg:text-sm text-secondary-color-3">
-      <div className="w-6 h-6 rounded-md bg-secondary-color-bg-2 p-1 text-secondary-color-3">
-        <Image alt="" src={icon} width={24} height={24} />
+      <div className="flex-shrink-0">
+        {typeof icon === "string" ? (
+          <Image alt="" src={icon} width={24} height={24} />
+        ) : (
+          icon
+        )}
       </div>
       <span className="font-medium">{text}</span>
     </div>

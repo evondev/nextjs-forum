@@ -1,17 +1,14 @@
 const IconThumbUp = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
+      width="10"
+      height="6"
+      viewBox="0 0 10 6"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="w-5 h-5"
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M10 18a.75.75 0 01-.75-.75V4.66L7.3 6.76a.75.75 0 11-1.1-1.02l3.25-3.5a.75.75 0 011.1 0l3.25 3.5a.75.75 0 01-1.1 1.02l-1.95-2.1v12.59A.75.75 0 0110 18z"
-        clipRule="evenodd"
-      />
+      <path d="M5 0.5L0 5.5L10 5.5L5 0.5Z" fill="currentColor" />
     </svg>
   );
 };

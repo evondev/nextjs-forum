@@ -1,7 +1,4 @@
-import IconBookmark from "@/components/icons/IconBookmark";
-import IconHeart from "@/components/icons/IconHeart";
 import IconHome from "@/components/icons/IconHome";
-import IconTag from "@/components/icons/IconTag";
 import IconUser from "@/components/icons/IconUser";
 
 const navLinks: {
@@ -12,32 +9,43 @@ const navLinks: {
   {
     icon: <IconHome></IconHome>,
     url: "/",
-    title: "Home",
+    title: "All Discussions",
   },
   {
     icon: <IconUser></IconUser>,
     url: "/users",
-    title: "All users",
+    title: "Members",
   },
   // {
-  //   icon: <IconUser></IconUser>,
-  //   url: "/my-profile",
-  //   title: "My profile",
+  //   icon: <IconTag></IconTag>,
+  //   url: "/topics",
+  //   title: "All Topics",
   // },
+  // {
+  //   icon: <IconTag></IconTag>,
+  //   url: "/tags",
+  //   title: "Tags",
+  // },
+  // {
+  //   icon: <IconHeart></IconHeart>,
+  //   url: "/liked",
+  //   title: "Liked posts",
+  // },
+  // {
+  //   icon: <IconBookmark></IconBookmark>,
+  //   url: "/saved",
+  //   title: "Saved posts",
+  // },
+];
+const topicLinks: {
+  icon: React.ReactNode;
+  url: string;
+  title: string;
+}[] = [
   {
-    icon: <IconTag></IconTag>,
-    url: "/tags",
-    title: "Tags",
-  },
-  {
-    icon: <IconHeart></IconHeart>,
-    url: "/liked",
-    title: "Liked posts",
-  },
-  {
-    icon: <IconBookmark></IconBookmark>,
-    url: "/saved",
-    title: "Saved posts",
+    icon: <IconHome></IconHome>,
+    url: "/gaming",
+    title: "Gaming",
   },
 ];
 const homePageFilters = [
@@ -55,4 +63,4 @@ const homePageFilters = [
   },
 ];
 
-export { homePageFilters, navLinks };
+export { homePageFilters, navLinks, topicLinks };

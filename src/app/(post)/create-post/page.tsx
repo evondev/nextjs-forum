@@ -8,7 +8,7 @@ async function CreatePost() {
   if (!userId) redirect("/sign-in");
   const mongoUser = await getUserById({ userId });
   return (
-    <div>
+    <div className="py-5">
       <Post userId={JSON.stringify(mongoUser._id)} />
     </div>
   );

@@ -2,7 +2,8 @@ import { getComments } from "@/lib/actions/comment.action";
 import { getTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import Filter from "./Filter";
+import IconDate from "../icons/IconDate";
+import MetaItem from "./MetaItem";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
 interface AllCommentsProps {
@@ -21,13 +22,13 @@ const AllComments = async ({
     postId,
   });
   return (
-    <div className="mt-10">
-      <div className="flexBetween mb-5">
-        <h3 className="font-bold text-lg text-primary">
-          {totalComments} comments
-        </h3>
-        <Filter filters={[]} />
-      </div>
+    <div className="mt-5">
+      <h3 className="font-bold text-lg flex items-center gap-2 mb-5">
+        Replies
+        <span className="inline-block px-5 py-1 rounded-md bg-primary bg-opacity-10">
+          {totalComments}
+        </span>
+      </h3>
       <div className="comment-list flex flex-col gap-10">
         {allComments &&
           allComments.length > 0 &&
@@ -55,18 +56,19 @@ const AllComments = async ({
                       User Experience Designer
                     </div>
                     <ParseHTML data={comment.content} />
-                    <div className="mt-2 text-sm text-secondary-color-3">
-                      {getTimestamp(comment.createdAt)}
+                    <div className="flex items-center gap-5">
+                      <MetaItem
+                        icon={<IconDate className="w-4 h-4"></IconDate>}
+                        text={<>{getTimestamp(comment?.createdAt)}</>}
+                      />
                     </div>
                   </div>
                 </div>
                 <div className="items-center gap-2 flex-shrink-0 hidden lg:flex">
                   <Votes
                     type="comment"
-                    downvotes={comment.downvotes.length}
-                    hasDownvoted={comment.downvotes.includes(userId)}
-                    hasUpvoted={comment.upvotes.includes(userId)}
-                    upvotes={comment.upvotes.length}
+                    votes={comment?.votes?.length}
+                    hasVoted={comment?.votes?.includes(userId)}
                     userId={JSON.stringify(userId)}
                     itemId={JSON.stringify(comment._id)}
                   ></Votes>

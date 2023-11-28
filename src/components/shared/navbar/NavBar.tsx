@@ -1,6 +1,5 @@
 import { ModeToggle } from "@/components/ModeToggle";
-import IconMesssage from "@/components/icons/IconMesssage";
-import IconNoti from "@/components/icons/IconNoti";
+import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,16 +39,13 @@ export const NavBar = () => {
         </svg>
       </div>
       <div className="flex items-center gap-6">
-        {/* <div className="w-10 h-10 rouned-lg flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
-          <IconMesssage />
-        </div>
-        <div className="w-10 h-10 flex items-center justify-center dark:bg-dark4 dark:text-white bg-secondary-color-6 text-secondary-color-4 rounded-lg">
-          <IconNoti />
-        </div> */}
         <div className="w-10 h-10 rouned-lg flex items-center justify-center rounded-lg">
           <UserButton></UserButton>
         </div>
         <ModeToggle></ModeToggle>
+        <Link href="/create-post">
+          <Button className="text-white">Start a discussion</Button>
+        </Link>
       </div>
     </div>
   );

@@ -37,7 +37,6 @@ export async function createPost({
   tags,
   author,
   path,
-  cover,
 }: CreatePostParams) {
   try {
     connectToDatabase();
@@ -45,9 +44,6 @@ export async function createPost({
       title,
       content,
       author,
-      cover:
-        cover ||
-        "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?q=80&w=5047&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     });
     const tagDocuments = [];
     for (const tag of tags) {
@@ -110,22 +106,55 @@ export async function getPostsByUserId(params: GetPostByUserIdParams) {
     console.log(error);
   }
 }
+export async function handlePostVote(params: {
+  postId: string;
+  userId: string;
+  path: string;
+  hasVoted: boolean;
+  action: "upvote" | "downvote";
+}) {
+  try {
+    connectToDatabase();
+    const { postId, userId, hasVoted, action, path } = params;
+    let updateQuery = {};
+    if (action === "upvote") {
+      if (hasVoted) {
+        updateQuery = { $pull: { votes: userId } };
+      } else {
+        updateQuery = { $addToSet: { votes: userId } };
+      }
+    } else if (action === "downvote") {
+      if (hasVoted) {
+        updateQuery = { $pull: { downvotes: userId } };
+      } else {
+        updateQuery = { $addToSet: { downvotes: userId } };
+      }
+    }
+    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
+      new: true,
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
+    // Increment author reputation
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
 export async function upvotePost(params: PostVoteParams) {
   try {
     connectToDatabase();
     const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
     let updateQuery = {};
     if (hasUpvoted) {
-      updateQuery = { $pull: { upvotes: userId } };
+      updateQuery = { $pull: { votes: userId } };
     } else if (hasDownvoted) {
       updateQuery = {
-        $pull: {
-          downvotes: userId,
-        },
-        $push: { upvotes: userId },
+        $push: { votes: userId },
       };
     } else {
-      updateQuery = { $addToSet: { upvotes: userId } };
+      updateQuery = { $addToSet: { votes: userId } };
     }
     const post = await Post.findByIdAndUpdate(postId, updateQuery, {
       new: true,

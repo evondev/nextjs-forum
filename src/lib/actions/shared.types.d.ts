@@ -13,7 +13,6 @@ export interface CreatePostParams {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path?: string;
-  cover?: string;
 }
 export interface CreateUserParams {
   clerkId: string;
