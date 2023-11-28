@@ -2,12 +2,13 @@ import { Document, Schema, model, models } from "mongoose";
 export interface IPost extends Document {
   title: string;
   content: string;
-  desc: string;
   tags: Schema.Types.ObjectId[];
   views: number;
   likes: Schema.Types.ObjectId[];
   saves: Schema.Types.ObjectId[];
-  votes: Schema.Types.ObjectId[];
+  upVotes: Schema.Types.ObjectId[];
+  downVotes: Schema.Types.ObjectId[];
+  points: number;
   author: Schema.Types.ObjectId;
   topic: Schema.Types.ObjectId;
   comments: Schema.Types.ObjectId[];
@@ -22,9 +23,6 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  desc: {
-    type: String,
-  },
   tags: [
     {
       type: Schema.Types.ObjectId,
@@ -32,6 +30,10 @@ const PostSchema = new Schema({
     },
   ],
   views: {
+    type: Number,
+    default: 0,
+  },
+  points: {
     type: Number,
     default: 0,
   },
@@ -47,7 +49,13 @@ const PostSchema = new Schema({
       ref: "User",
     },
   ],
-  votes: [
+  upVotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  downVotes: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",
@@ -57,16 +65,16 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  topic: {
+    type: Schema.Types.ObjectId,
+    ref: "Topic",
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,
       ref: "Comment",
     },
   ],
-  topic: {
-    type: Schema.Types.ObjectId,
-    ref: "Topic",
-  },
   createdAt: {
     type: Date,
     default: Date.now,

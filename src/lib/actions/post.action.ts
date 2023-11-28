@@ -1,6 +1,7 @@
 "use server";
 import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
+import Topic from "@/database/topic.model";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
@@ -9,13 +10,19 @@ import {
   GetPostByIdParams,
   GetPostByUserIdParams,
   GetPostParams,
-  PostVoteParams,
 } from "./shared.types";
 
 export async function getPosts(params: GetPostParams) {
   try {
     connectToDatabase();
+    let sorted = {};
+    if (params.sorted === "latest") {
+      sorted = { createdAt: -1 };
+    } else if (params.sorted === "top") {
+      sorted = { votes: -1 };
+    }
     const posts = await Post.find({})
+      .sort(sorted)
       .populate({
         path: "tags",
         model: Tag,
@@ -23,10 +30,13 @@ export async function getPosts(params: GetPostParams) {
       .populate({
         path: "author",
         model: User,
+      })
+      .populate({
+        path: "topic",
+        model: Topic,
       });
-    return {
-      posts,
-    };
+
+    return posts;
   } catch (error) {
     console.log(error);
   }
@@ -34,34 +44,32 @@ export async function getPosts(params: GetPostParams) {
 export async function createPost({
   title,
   content,
-  tags,
   author,
   path,
   topic,
-  desc,
 }: CreatePostParams) {
   try {
     connectToDatabase();
-    const post = await Post.create({
+    await Post.create({
       title,
       content,
       author,
       topic,
     });
-    const tagDocuments = [];
-    for (const tag of tags) {
-      const existingTag = await Tag.findOneAndUpdate(
-        { name: { $regex: new RegExp(`^${tag}$`, "i") } },
-        { $setOnInsert: { name: tag }, $push: { posts: post._id } },
-        { upsert: true, new: true }
-      );
+    // const tagDocuments = [];
+    // for (const tag of tags) {
+    //   const existingTag = await Tag.findOneAndUpdate(
+    //     { name: { $regex: new RegExp(`^${tag}$`, "i") } },
+    //     { $setOnInsert: { name: tag }, $push: { posts: post._id } },
+    //     { upsert: true, new: true }
+    //   );
 
-      tagDocuments.push(existingTag._id);
-    }
+    //   tagDocuments.push(existingTag._id);
+    // }
 
-    await Post.findByIdAndUpdate(post._id, {
-      $push: { tags: { $each: tagDocuments } },
-    });
+    // await Post.findByIdAndUpdate(post._id, {
+    //   $push: { tags: { $each: tagDocuments } },
+    // });
     revalidatePath(path || "/");
   } catch (error) {
     console.log("file: post.action.ts:41 ~ error:", error);
@@ -109,55 +117,29 @@ export async function getPostsByUserId(params: GetPostByUserIdParams) {
     console.log(error);
   }
 }
-export async function handlePostVote(params: {
+export async function handleUpvote(params: {
   postId: string;
   userId: string;
   path: string;
-  hasVoted: boolean;
-  action: "upvote" | "downvote";
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
 }) {
-  try {
-    connectToDatabase();
-    const { postId, userId, hasVoted, action, path } = params;
-    let updateQuery = {};
-    if (action === "upvote") {
-      if (hasVoted) {
-        updateQuery = { $pull: { votes: userId } };
-      } else {
-        updateQuery = { $addToSet: { votes: userId } };
-      }
-    } else if (action === "downvote") {
-      if (hasVoted) {
-        updateQuery = { $pull: { downvotes: userId } };
-      } else {
-        updateQuery = { $addToSet: { downvotes: userId } };
-      }
-    }
-    const post = await Post.findByIdAndUpdate(postId, updateQuery, {
-      new: true,
-    });
-    if (!post) {
-      throw new Error("Post not found");
-    }
-    // Increment author reputation
-    revalidatePath(path);
-  } catch (error) {
-    throw error;
-  }
-}
-export async function upvotePost(params: PostVoteParams) {
   try {
     connectToDatabase();
     const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
     let updateQuery = {};
     if (hasUpvoted) {
-      updateQuery = { $pull: { votes: userId } };
+      updateQuery = { $pull: { upVotes: userId }, $inc: { points: -1 } };
     } else if (hasDownvoted) {
       updateQuery = {
-        $push: { votes: userId },
+        $pull: {
+          downVotes: userId,
+        },
+        $push: { upVotes: userId },
+        $inc: { points: 2 },
       };
     } else {
-      updateQuery = { $addToSet: { votes: userId } };
+      updateQuery = { $addToSet: { upVotes: userId }, $inc: { points: 1 } };
     }
     const post = await Post.findByIdAndUpdate(postId, updateQuery, {
       new: true,
@@ -171,22 +153,29 @@ export async function upvotePost(params: PostVoteParams) {
     throw error;
   }
 }
-export async function downvotePost(params: PostVoteParams) {
+export async function handleDownvote(params: {
+  postId: string;
+  userId: string;
+  path: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+}) {
   try {
     connectToDatabase();
     const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
     let updateQuery = {};
     if (hasDownvoted) {
-      updateQuery = { $pull: { downvotes: userId } };
+      updateQuery = { $pull: { downVotes: userId }, $inc: { points: 1 } };
     } else if (hasUpvoted) {
       updateQuery = {
         $pull: {
-          upvotes: userId,
+          upVotes: userId,
         },
-        $push: { downvotes: userId },
+        $push: { downVotes: userId },
+        $inc: { points: -2 },
       };
     } else {
-      updateQuery = { $addToSet: { downvotes: userId } };
+      updateQuery = { $addToSet: { downVotes: userId }, $inc: { points: -1 } };
     }
     const post = await Post.findByIdAndUpdate(postId, updateQuery, {
       new: true,

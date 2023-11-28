@@ -33,6 +33,7 @@ async function PostDetailsPage({
     });
   }
   if (!post) return null;
+  console.log("file: page.tsx:36 ~ post:", post);
   const author = post.author;
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start p-5 pl-0">
@@ -44,8 +45,9 @@ async function PostDetailsPage({
                 type="post"
                 itemId={JSON.stringify(post._id)}
                 userId={JSON.stringify(mongoUser?._id)}
-                votes={post?.votes?.length || 0}
-                hasVoted={post?.votes?.includes(mongoUser?._id)}
+                points={post?.points}
+                hasUpvoted={post?.upVotes?.includes(mongoUser?._id)}
+                hasDownvoted={post?.downVotes?.includes(mongoUser?._id)}
               ></Votes>
               <div className="flex items-center gap-4">
                 <Image

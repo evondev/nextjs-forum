@@ -1,3 +1,4 @@
+import { ITopic } from "@/database/topic.model";
 import { IUser } from "@/database/user.model";
 import { Schema } from "mongoose";
 
@@ -6,15 +7,14 @@ export interface GetPostParams {
   pageSize?: number;
   searchQuery?: string;
   filter?: string;
+  sorted?: "latest" | "top";
 }
 export interface CreatePostParams {
   title: string;
   content: string;
-  tags: string[];
   author: Schema.Types.ObjectId | IUser;
+  topic: Schema.Types.ObjectId | ITopic;
   path?: string;
-  topic?: string;
-  desc?: string;
 }
 export interface CreateUserParams {
   clerkId: string;

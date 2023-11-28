@@ -43,9 +43,7 @@ function Post({
     defaultValues: {
       title: "",
       content: "",
-      tags: [],
       topic: "",
-      desc: "",
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,10 +55,8 @@ function Post({
       await createPost({
         title: values.title,
         content: values.content,
-        tags: values.tags,
         author: JSON.parse(userId),
-        topic: values.topic,
-        desc: values.desc,
+        topic: JSON.parse(values.topic),
       });
       router.push("/");
     } catch (error) {
@@ -69,31 +65,31 @@ function Post({
       setIsSubmitting(false);
     }
   }
-  const handleInputKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
-  ) => {
-    if (e.key === "Enter" && field.name === "tags") {
-      e.preventDefault();
-      const tagInput = e.target as HTMLInputElement;
-      const tagValue = tagInput.value.trim();
-      if (tagValue) {
-        if (tagValue.length > 20) {
-          return form.setError("tags", {
-            type: "max",
-            message: "Tag length must be less than 20 characters",
-          });
-        }
-        if (!field.value.includes(tagValue)) {
-          form.setValue("tags", [...field.value, tagValue]);
-          tagInput.value = "";
-          form.clearErrors("tags");
-        }
-      } else {
-        form.trigger();
-      }
-    }
-  };
+  // const handleInputKeyDown = (
+  //   e: React.KeyboardEvent<HTMLInputElement>,
+  //   field: any
+  // ) => {
+  //   if (e.key === "Enter" && field.name === "tags") {
+  //     e.preventDefault();
+  //     const tagInput = e.target as HTMLInputElement;
+  //     const tagValue = tagInput.value.trim();
+  //     if (tagValue) {
+  //       if (tagValue.length > 20) {
+  //         return form.setError("tags", {
+  //           type: "max",
+  //           message: "Tag length must be less than 20 characters",
+  //         });
+  //       }
+  //       if (!field.value.includes(tagValue)) {
+  //         form.setValue("tags", [...field.value, tagValue]);
+  //         tagInput.value = "";
+  //         form.clearErrors("tags");
+  //       }
+  //     } else {
+  //       form.trigger();
+  //     }
+  //   }
+  // };
   return (
     <div className="bg-white dark:bg-dark3 max-w-[900px] mx-auto p-8 rounded-2xl">
       <Form {...form}>
@@ -108,25 +104,6 @@ function Post({
                     <Input
                       placeholder="New discussion title..."
                       className="no-focus p-4 h-auto font-semibold text-lg"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="desc"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Description (optional)"
-                      className="no-focus p-4 h-12"
-                      required={false}
                       {...field}
                     />
                   </FormControl>
@@ -158,7 +135,7 @@ function Post({
                               <SelectItem
                                 className="hover:bg-gray-100"
                                 key={topic.name}
-                                value={topic._id!}
+                                value={JSON.stringify(topic._id!)}
                               >
                                 {topic.name}
                               </SelectItem>
@@ -217,7 +194,7 @@ function Post({
                           "h1 h2 h3 h4 h5 h6 | preview | fullscreen |" +
                           "link",
                         content_style: `
-                           body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:14px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; }`,
+                           body { font-family: DM sans, Inter,Helvetica,Arial,sans-serif; font-size:14px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; }`,
                       }}
                     />
                   </FormControl>
@@ -226,7 +203,7 @@ function Post({
               </>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="tags"
             render={({ field }) => (
@@ -258,7 +235,7 @@ function Post({
                 </FormItem>
               </>
             )}
-          />
+          /> */}
           <div className="flex items-center gap-5">
             <Button
               type="submit"

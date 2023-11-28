@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-const PopularTopics = () => {
+const PopularTopics = async ({ data }: { data: any[] }) => {
   return (
-    <div className="p-5 bg-white rounded-lg mb-5">
+    <div className="p-5 bgWhite_darkBgDark3 rounded-lg mb-5">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-lg font-bold">Popular topics</h2>
         <Link
@@ -12,27 +12,34 @@ const PopularTopics = () => {
           See all topics
         </Link>
       </div>
-      <div className="flex flex-col gap-4"></div>
+      <div className="flex flex-col gap-4">
+        {data &&
+          data.length > 0 &&
+          data.map((topic, index) => (
+            <TopicItem topic={topic} key={index}></TopicItem>
+          ))}
+      </div>
     </div>
   );
 };
 
-function TopicItem() {
+function TopicItem({ topic }: { topic: any }) {
   return (
-    <div className="flex items-center justify-between gap-5">
+    <Link
+      href={`/topic/${topic._id}`}
+      className="flex items-center justify-between gap-5"
+    >
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gray-100"></div>
         <div>
-          <h3 className="font-semibold">Gaming</h3>
-          <div className="text-sm text-secondary-color-3">
-            A discussion topic about gaming
-          </div>
+          <h3 className="font-semibold">{topic.name}</h3>
+          <div className="text-sm text-secondary-color-3">{topic.desc}</div>
         </div>
       </div>
       <div className="px-2 py-1 rounded bg-secondary bg-opacity-20 text-sm">
-        243 discussion
+        {topic.postCount} discussion
       </div>
-    </div>
+    </Link>
   );
 }
 
