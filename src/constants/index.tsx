@@ -1,4 +1,6 @@
+import IconCube from "@/components/icons/IconCube";
 import IconHome from "@/components/icons/IconHome";
+import IconProfile from "@/components/icons/IconProfile";
 import IconUser from "@/components/icons/IconUser";
 
 const navLinks: {
@@ -16,11 +18,16 @@ const navLinks: {
     url: "/users",
     title: "Members",
   },
-  // {
-  //   icon: <IconTag></IconTag>,
-  //   url: "/topics",
-  //   title: "All Topics",
-  // },
+  {
+    icon: <IconCube></IconCube>,
+    url: "/topics",
+    title: "All Topics",
+  },
+  {
+    icon: <IconProfile></IconProfile>,
+    url: "/profile",
+    title: "My Profile",
+  },
   // {
   //   icon: <IconTag></IconTag>,
   //   url: "/tags",
@@ -37,17 +44,6 @@ const navLinks: {
   //   title: "Saved posts",
   // },
 ];
-const topicLinks: {
-  icon: React.ReactNode;
-  url: string;
-  title: string;
-}[] = [
-  {
-    icon: <IconHome></IconHome>,
-    url: "/gaming",
-    title: "Gaming",
-  },
-];
 const homePageFilters = [
   {
     name: "Newest",
@@ -63,4 +59,4 @@ const homePageFilters = [
   },
 ];
 
-export { homePageFilters, navLinks, topicLinks };
+export { homePageFilters, navLinks };

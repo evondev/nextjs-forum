@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import HeadingWidget from "../HeadingWidget";
 
 const HitsUsersWidget = ({ users }: { users?: any[] }) => {
   if (!users || users.length <= 0) return null;
   return (
-    <div className="p-5 bg-white rounded-lg">
+    <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-lg font-bold">Hit Users</h3>
+        <HeadingWidget>Hit Users</HeadingWidget>
         <Link href="/users" className="font-semibold text-primary text-sm">
           All Users
         </Link>
@@ -24,9 +25,15 @@ const HitsUserItem = ({ item }: { item: any }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-100"></div>
+        <Image
+          src={item?.avatar}
+          width={40}
+          height={40}
+          className="rounded-full object-contain"
+          alt="avatar"
+        ></Image>
         <div className="flex flex-col">
-          <HeadingWidget>{item?.name}</HeadingWidget>
+          <h4 className="font-semibold">{item?.name}</h4>
           <span className="text-sm text-secondary-color-3">
             @{item?.username}
           </span>

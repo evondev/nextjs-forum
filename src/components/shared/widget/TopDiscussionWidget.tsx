@@ -14,7 +14,7 @@ const TopDiscussionWidget = ({
 }) => {
   if (!posts || posts.length <= 0) return null;
   return (
-    <div className="p-5 bg-white rounded-lg">
+    <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
       <HeadingWidget className="mb-5">Top Discussions</HeadingWidget>
       <div className="flex flex-col gap-5">
         {posts.map((item, index) => (
@@ -52,7 +52,7 @@ const DiscusstionItem = ({ item, userId }: { item: any; userId: string }) => {
               {item?.author?.username}
             </span>
           </div>
-          <MetaItem icon={<IconComment />} text={23} />
+          <MetaItem icon={<IconComment />} text={item.comments.length || 0} />
         </div>
       </div>
     </div>

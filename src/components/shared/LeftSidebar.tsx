@@ -1,5 +1,5 @@
 "use client";
-import { navLinks, topicLinks } from "@/constants";
+import { navLinks } from "@/constants";
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import ActiveLink from "./active-link/ActiveLink";
@@ -13,7 +13,7 @@ function LeftSidebar() {
           <ActiveLink
             key={link.url}
             href={link.url}
-            className="flex items-center gap-3 p-3 rounded-lg text-base"
+            className="flex items-center gap-5 p-3 rounded-lg text-base"
           >
             {link.icon}
             <span>{link.title}</span>
@@ -23,16 +23,16 @@ function LeftSidebar() {
       <div>
         <h3 className="uppercase font-semibold text-sm mb-3">Popular topics</h3>
         <div className="flex flex-col gap-3">
-          {topicLinks.map((link) => (
+          {/* {topicLinks.map((link) => (
             <ActiveLink
               key={link.url}
               href={link.url}
-              className="flex items-center gap-3 p-3 rounded-lg text-base"
+              className="flex items-center gap-5 p-3 rounded-lg text-base"
             >
-              {link.icon}
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"></div>
               <span>{link.title}</span>
             </ActiveLink>
-          ))}
+          ))} */}
         </div>
       </div>
       {!isSignedIn && (

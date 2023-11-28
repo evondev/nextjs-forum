@@ -8,7 +8,9 @@ import { getAllUsers, getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 
 async function Home() {
-  const posts = await getPosts({});
+  const posts = await getPosts({
+    sorted: "latest",
+  });
   const topPosts = await getPosts({
     sorted: "top",
   });
