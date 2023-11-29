@@ -46,16 +46,17 @@ export async function upvoteComment(params: CommentVoteParams) {
     const { commentId, userId, hasUpvoted, hasDownvoted, path } = params;
     let updateQuery = {};
     if (hasUpvoted) {
-      updateQuery = { $pull: { upvotes: userId } };
+      updateQuery = { $pull: { upVotes: userId }, $inc: { points: -1 } };
     } else if (hasDownvoted) {
       updateQuery = {
         $pull: {
-          downvotes: userId,
+          downVotes: userId,
         },
-        $push: { upvotes: userId },
+        $push: { upVotes: userId },
+        $inc: { points: 2 },
       };
     } else {
-      updateQuery = { $addToSet: { upvotes: userId } };
+      updateQuery = { $addToSet: { upVotes: userId }, $inc: { points: 1 } };
     }
     const comment = await Comment.findByIdAndUpdate(commentId, updateQuery, {
       new: true,
@@ -72,16 +73,17 @@ export async function downvoteComment(params: CommentVoteParams) {
     const { commentId, userId, hasUpvoted, hasDownvoted, path } = params;
     let updateQuery = {};
     if (hasDownvoted) {
-      updateQuery = { $pull: { downvotes: userId } };
+      updateQuery = { $pull: { downVotes: userId }, $inc: { points: 1 } };
     } else if (hasUpvoted) {
       updateQuery = {
         $pull: {
-          upvotes: userId,
+          upVotes: userId,
         },
-        $push: { downvotes: userId },
+        $push: { downVotes: userId },
+        $inc: { points: -2 },
       };
     } else {
-      updateQuery = { $addToSet: { downvotes: userId } };
+      updateQuery = { $addToSet: { downVotes: userId }, $inc: { points: -1 } };
     }
     const comment = await Comment.findByIdAndUpdate(commentId, updateQuery, {
       new: true,

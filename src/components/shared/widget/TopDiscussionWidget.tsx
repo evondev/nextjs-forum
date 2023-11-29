@@ -10,9 +10,9 @@ const TopDiscussionWidget = ({
   userId,
 }: {
   posts?: any[];
-  userId: string;
+  userId?: string;
 }) => {
-  if (!posts || posts.length <= 0) return null;
+  if (!posts || posts.length <= 0 || !userId) return null;
   return (
     <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
       <HeadingWidget className="mb-5">Top Discussions</HeadingWidget>

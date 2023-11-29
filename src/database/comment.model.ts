@@ -4,8 +4,9 @@ export interface IComment extends Document {
   post: Schema.Types.ObjectId;
   author: Schema.Types.ObjectId;
   content: string;
-  upvotes: Schema.Types.ObjectId[];
-  downvotes: Schema.Types.ObjectId[];
+  points: number;
+  upVotes: Schema.Types.ObjectId[];
+  downVotes: Schema.Types.ObjectId[];
   createdAt: Date;
 }
 const CommentSchema = new Schema({
@@ -23,13 +24,17 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
-  upvotes: [
+  points: {
+    type: Number,
+    default: 0,
+  },
+  upVotes: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
   ],
-  downvotes: [
+  downVotes: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -12,6 +12,7 @@ export interface IPost extends Document {
   author: Schema.Types.ObjectId;
   topic: Schema.Types.ObjectId;
   comments: Schema.Types.ObjectId[];
+  desc: string;
   createdAt: Date;
 }
 const PostSchema = new Schema({
@@ -22,6 +23,9 @@ const PostSchema = new Schema({
   content: {
     type: String,
     required: true,
+  },
+  desc: {
+    type: String,
   },
   tags: [
     {

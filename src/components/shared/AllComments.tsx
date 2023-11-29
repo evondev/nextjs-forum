@@ -25,7 +25,7 @@ const AllComments = async ({
     <div className="mt-5">
       <h3 className="font-bold text-lg flex items-center gap-2 mb-5">
         Replies
-        <span className="inline-block px-5 py-1 rounded-md bg-primary bg-opacity-10">
+        <span className="inline-block px-3 text-sm py-1 leading-none rounded-md bg-primary bg-opacity-10">
           {totalComments}
         </span>
       </h3>
@@ -67,10 +67,11 @@ const AllComments = async ({
                 <div className="items-center gap-2 flex-shrink-0 hidden lg:flex">
                   <Votes
                     type="comment"
-                    votes={comment?.votes?.length}
-                    hasVoted={comment?.votes?.includes(userId)}
                     userId={JSON.stringify(userId)}
                     itemId={JSON.stringify(comment._id)}
+                    points={comment.points}
+                    hasUpvoted={comment.upVotes?.includes(userId)}
+                    hasDownvoted={comment.downVotes?.includes(userId)}
                   ></Votes>
                 </div>
               </div>

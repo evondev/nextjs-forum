@@ -1,5 +1,5 @@
-import PostCard from "@/components/cards/PostCard";
 import PopularTopics from "@/components/shared/PopularTopics";
+import PostList from "@/components/shared/PostList";
 import HitsUsersWidget from "@/components/shared/widget/HitsUsersWidget";
 import TopDiscussionWidget from "@/components/shared/widget/TopDiscussionWidget";
 import { getPosts } from "@/lib/actions/post.action";
@@ -24,30 +24,10 @@ async function Home() {
     });
   }
   return (
-    <div className="grid xl:grid-cols-[1fr_350px] gap-5">
+    <div className="grid xl:grid-cols-[1fr_350px] gap-5 pr-5">
       <div>
         <PopularTopics data={topics || []}></PopularTopics>
-        <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
-          <h2 className="text-lg font-bold mb-5">Latest Discussions</h2>
-          <div className="flex flex-col gap-10">
-            {posts?.map((post, index) => (
-              <PostCard
-                key={post._id}
-                _id={post._id}
-                title={post.title}
-                author={post.author}
-                likes={post.likes}
-                comments={post.comments}
-                points={post.points}
-                createdAt={post.createdAt}
-                userId={mongoUser?._id}
-                topic={post.topic}
-                upVotes={post.upVotes}
-                downVotes={post.downVotes}
-              />
-            ))}
-          </div>
-        </div>
+        <PostList posts={posts || []} userId={mongoUser?._id}></PostList>
       </div>
       <div className="flex flex-col gap-10">
         <TopDiscussionWidget

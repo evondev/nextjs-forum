@@ -1,4 +1,5 @@
 "use client";
+import { upvoteComment } from "@/lib/actions/comment.action";
 import { handleDownvote, handleUpvote } from "@/lib/actions/post.action";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -35,6 +36,13 @@ const Votes = ({
           path: pathname,
         });
       } else if (type === "comment") {
+        await upvoteComment({
+          commentId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasDownvoted,
+          hasUpvoted,
+          path: pathname,
+        });
       }
     }
     if (action === "downvote") {

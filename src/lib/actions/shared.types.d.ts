@@ -15,6 +15,7 @@ export interface CreatePostParams {
   author: Schema.Types.ObjectId | IUser;
   topic: Schema.Types.ObjectId | ITopic;
   path?: string;
+  desc?: string;
 }
 export interface CreateUserParams {
   clerkId: string;

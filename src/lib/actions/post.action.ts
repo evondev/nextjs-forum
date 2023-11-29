@@ -47,6 +47,7 @@ export async function createPost({
   author,
   path,
   topic,
+  desc,
 }: CreatePostParams) {
   try {
     connectToDatabase();
@@ -55,6 +56,7 @@ export async function createPost({
       content,
       author,
       topic,
+      desc,
     });
     // const tagDocuments = [];
     // for (const tag of tags) {

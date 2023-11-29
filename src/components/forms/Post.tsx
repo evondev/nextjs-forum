@@ -4,10 +4,10 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { editorOptions } from "@/constants";
 import { createPost } from "@/lib/actions/post.action";
 import { CreateTopicParams } from "@/lib/actions/shared.types";
 import { postSchema } from "@/lib/validations";
@@ -18,7 +18,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import TagItem from "../shared/TagItem";
 import { Button } from "../ui/button";
 import {
   Select,
@@ -44,6 +43,7 @@ function Post({
       title: "",
       content: "",
       topic: "",
+      desc: "",
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,6 +57,7 @@ function Post({
         content: values.content,
         author: JSON.parse(userId),
         topic: JSON.parse(values.topic),
+        desc: values.desc,
       });
       router.push("/");
     } catch (error) {
@@ -114,6 +115,25 @@ function Post({
           />
           <FormField
             control={form.control}
+            name="desc"
+            render={({ field }) => (
+              <>
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Description (optional)"
+                      className="no-focus h-12"
+                      required={false}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              </>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="topic"
             render={({ field }) => (
               <>
@@ -161,41 +181,7 @@ function Post({
                       apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                       // @ts-ignore
                       onInit={(evt, editor) => (editorRef.current = editor)}
-                      initialValue="<p>This is the initial content of the editor.</p>"
-                      onBlur={field.onBlur}
-                      onEditorChange={(content) => field.onChange(content)}
-                      init={{
-                        skin: theme === "dark" ? "oxide-dark" : "oxide",
-                        height: 250,
-                        menubar: false,
-                        plugins: [
-                          "advlist",
-                          "autolink",
-                          "lists",
-                          "link",
-                          "image",
-                          "charmap",
-                          "preview",
-                          "anchor",
-                          "searchreplace",
-                          "visualblocks",
-                          "codesample",
-                          "fullscreen",
-                          "insertdatetime",
-                          "media",
-                          "table",
-                          "heading",
-                        ],
-                        toolbar:
-                          "undo redo | " +
-                          "codesample | bold italic forecolor | alignleft aligncenter |" +
-                          "alignright alignjustify | bullist numlist |" +
-                          "image |" +
-                          "h1 h2 h3 h4 h5 h6 | preview | fullscreen |" +
-                          "link",
-                        content_style: `
-                           body { font-family: DM sans, Inter,Helvetica,Arial,sans-serif; font-size:14px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; }`,
-                      }}
+                      {...editorOptions(field, theme)}
                     />
                   </FormControl>
                   <FormMessage className="text-red-400" />
