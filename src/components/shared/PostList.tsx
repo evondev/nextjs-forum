@@ -1,7 +1,7 @@
 import PostCard from "../cards/PostCard";
 
 const PostList = ({ posts, userId }: { posts: any[]; userId: string }) => {
-  if (!posts || posts.length <= 0 || !userId) return null;
+  if (!posts || posts.length <= 0) return null;
   return (
     <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
       <h2 className="text-lg font-bold mb-5">Latest Discussions</h2>

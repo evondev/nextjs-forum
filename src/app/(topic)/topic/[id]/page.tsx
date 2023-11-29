@@ -4,9 +4,9 @@ import TopDiscussionWidget from "@/components/shared/widget/TopDiscussionWidget"
 import Link from "next/link";
 
 const TopicDetailsPage = ({
-  queryParams,
+  params,
 }: {
-  queryParams: {
+  params: {
     id: string;
   };
 }) => {

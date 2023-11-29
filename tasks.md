@@ -1,0 +1,6 @@
+- Global search
+- Local search
+- Pagination
+- Filter
+- CRUD Topic
+- Update Profile

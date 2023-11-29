@@ -33,7 +33,6 @@ async function PostDetailsPage({
     });
   }
   if (!post) return null;
-  console.log("file: page.tsx:36 ~ post:", post);
   const author = post.author;
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start p-5 pl-0">
