@@ -3,6 +3,7 @@ import Post from "@/database/post.model";
 import Tag from "@/database/tag.model";
 import Topic from "@/database/topic.model";
 import User from "@/database/user.model";
+import { FilterQuery } from "mongoose";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
 import {
@@ -15,18 +16,27 @@ import {
 export async function getPosts(params: GetPostParams) {
   try {
     connectToDatabase();
-    let sorted = {};
-    if (params.sorted === "latest") {
-      sorted = { createdAt: -1 };
-    } else if (params.sorted === "top") {
-      sorted = { votes: -1 };
+    const { searchQuery, page = 1, pageSize = 20, sorted } = params;
+    const skipAmount = (page - 1) * pageSize;
+    const query: FilterQuery<typeof Post> = {};
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: searchQuery, $options: "i" } },
+        { content: { $regex: searchQuery, $options: "i" } },
+      ];
     }
-    const posts = await Post.find({})
-      .sort(sorted)
-      .populate({
-        path: "tags",
-        model: Tag,
-      })
+    let sortOptions = {};
+    switch (sorted) {
+      case "popular":
+        sortOptions = { votes: -1 };
+        break;
+
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+    const posts = await Post.find(query)
+      .sort(sortOptions)
       .populate({
         path: "author",
         model: User,
@@ -34,9 +44,16 @@ export async function getPosts(params: GetPostParams) {
       .populate({
         path: "topic",
         model: Topic,
-      });
+      })
+      .skip(skipAmount)
+      .limit(pageSize);
+    const totalPosts = await Post.countDocuments(query);
+    const isNext = totalPosts > skipAmount + posts.length;
 
-    return posts;
+    return {
+      posts,
+      isNext,
+    };
   } catch (error) {
     console.log(error);
   }

@@ -60,11 +60,14 @@ export async function deleteUser(params: DeleteUserParams) {
     console.log(error);
   }
 }
-export async function getAllUsers(params: GetAllUserParams) {
+export async function getAllUsers(params: GetAllUserParams, userId?: string) {
   try {
     connectToDatabase();
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
-    const users = await User.find({}).sort({ createdAt: -1 });
+    const users = await User.find({
+      _id: { $ne: userId },
+    }).sort({ createdAt: -1 });
+
     return users;
   } catch (error) {
     console.log(error);

@@ -4,8 +4,8 @@ import { auth } from "@clerk/nextjs";
 
 async function UsersPage() {
   const { userId } = auth();
-  const users = await getAllUsers({});
   const userInfo = await getUserById({ userId: userId || "" });
+  const users = await getAllUsers({}, userInfo?._id);
   return (
     <div className="grid grid-cols-[1fr_320px] gap-5">
       <div className="p-5 bg-white rounded-lg flex flex-col gap-5">

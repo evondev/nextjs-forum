@@ -7,7 +7,7 @@ export interface GetPostParams {
   pageSize?: number;
   searchQuery?: string;
   filter?: string;
-  sorted?: "latest" | "top";
+  sorted?: "latest" | "popular";
 }
 export interface CreatePostParams {
   title: string;

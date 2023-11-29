@@ -1,12 +1,35 @@
+"use client";
 import { homePageFilters } from "@/constants";
+import { formUrlQuery } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 function HomeFilters() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const sorted = searchParams.get("sorted")
+    ? searchParams.get("sorted")
+    : "latest";
+  const handleFilter = (filter: string) => {
+    if (filter === sorted) return;
+    const newUrl = formUrlQuery({
+      params: searchParams.toString(),
+      key: "sorted",
+      value: filter,
+    });
+    router.push(newUrl);
+  };
   return (
-    <div className="flex gap-5 flex-wrap">
-      {homePageFilters.map((filter) => (
+    <div className="flex gap-1 flex-wrap mb-5">
+      {homePageFilters.map((filter, index) => (
         <button
           key={filter.name}
-          className="text-sm py-2 px-5 rounded-lg bg-white text-secondary-color-3 font-medium hover:text-primary hover:bg-primary hover:bg-opacity-10 dark:bg-dark4 dark:text-white"
+          className={twMerge(
+            "text-sm py-2 px-5 rounded-lg bg-transparent",
+            sorted === filter.value &&
+              "bg-secondary bg-opacity-10 text-secondary font-semibold"
+          )}
+          onClick={() => handleFilter(filter.value)}
         >
           {filter.name}
         </button>

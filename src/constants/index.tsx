@@ -46,16 +46,12 @@ const navLinks: {
 ];
 const homePageFilters = [
   {
-    name: "Newest",
-    value: "newest",
+    name: "Latest",
+    value: "latest",
   },
   {
     name: "Popular",
     value: "popular",
-  },
-  {
-    name: "Following",
-    value: "following",
   },
 ];
 const editorOptions = (field: any, theme: any) => ({

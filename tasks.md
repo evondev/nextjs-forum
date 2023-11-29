@@ -1,6 +1,16 @@
-- Global search
-- Local search
-- Pagination
-- Filter
-- CRUD Topic
+- Local search ✅
+- Pagination ✅
+- Filter ✅
+- Follow member
+- Get posts by member
+- Get posts by following
+- Get posts by topic
+- Add topic
+- Topics page
+- 404 page
+- No results page
+- Loading skeleton
+- Breadcrumb
+- Profile page
 - Update Profile
+- Global search

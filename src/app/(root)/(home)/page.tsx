@@ -1,3 +1,6 @@
+import HomeFilters from "@/components/home/HomeFilters";
+import LocalSearch from "@/components/shared/LocalSearch";
+import Pagination from "@/components/shared/Pagination";
 import PopularTopics from "@/components/shared/PopularTopics";
 import PostList from "@/components/shared/PostList";
 import HitsUsersWidget from "@/components/shared/widget/HitsUsersWidget";
@@ -7,15 +10,17 @@ import { getAllTopics } from "@/lib/actions/topic.action";
 import { getAllUsers, getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 
-async function Home() {
-  const posts = await getPosts({
-    sorted: "latest",
+async function Home({ searchParams }: { searchParams: any }) {
+  const results = await getPosts({
+    searchQuery: searchParams?.search,
+    page: searchParams.page ? +searchParams.page : 1,
+    sorted: searchParams.sorted || "latest",
   });
   const topPosts = await getPosts({
-    sorted: "top",
+    sorted: "popular",
+    pageSize: 5,
   });
   const topics = await getAllTopics();
-  const users = await getAllUsers({});
   const { userId: clerkId } = auth();
   let mongoUser: any;
   if (clerkId) {
@@ -23,15 +28,25 @@ async function Home() {
       userId: clerkId,
     });
   }
+  const users = await getAllUsers({}, mongoUser?._id);
   return (
     <div className="grid xl:grid-cols-[1fr_350px] gap-5 pr-5">
       <div>
         <PopularTopics data={topics || []}></PopularTopics>
-        <PostList posts={posts || []} userId={mongoUser?._id}></PostList>
+        <LocalSearch></LocalSearch>
+        <HomeFilters></HomeFilters>
+        <PostList
+          posts={results?.posts || []}
+          userId={mongoUser?._id}
+        ></PostList>
+        <Pagination
+          pageNumber={searchParams.page ? +searchParams.page : 1}
+          isNext={results?.isNext || false}
+        ></Pagination>
       </div>
       <div className="flex flex-col gap-10">
         <TopDiscussionWidget
-          posts={topPosts || []}
+          posts={topPosts?.posts || []}
           userId={mongoUser?._id}
         ></TopDiscussionWidget>
         <HitsUsersWidget users={users || []}></HitsUsersWidget>
