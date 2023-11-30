@@ -7,6 +7,7 @@ const navLinks: {
   icon: React.ReactNode;
   url: string;
   title: string;
+  isActive?: (pathname: string) => boolean;
 }[] = [
   {
     icon: <IconHome></IconHome>,
@@ -22,6 +23,7 @@ const navLinks: {
     icon: <IconCube></IconCube>,
     url: "/topics",
     title: "All Topics",
+    isActive: (pathname: string) => pathname.includes("topic"),
   },
   {
     icon: <IconProfile></IconProfile>,

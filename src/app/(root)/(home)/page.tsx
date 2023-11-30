@@ -28,7 +28,7 @@ async function Home({ searchParams }: { searchParams: any }) {
       userId: clerkId,
     });
   }
-  const users = await getAllUsers({}, mongoUser?._id);
+  const users = await getAllUsers({});
   return (
     <div className="grid xl:grid-cols-[1fr_350px] gap-5 pr-5">
       <div>
@@ -49,7 +49,10 @@ async function Home({ searchParams }: { searchParams: any }) {
           posts={topPosts?.posts || []}
           userId={mongoUser?._id}
         ></TopDiscussionWidget>
-        <HitsUsersWidget users={users || []}></HitsUsersWidget>
+        <HitsUsersWidget
+          userId={mongoUser?._id}
+          users={users || []}
+        ></HitsUsersWidget>
       </div>
     </div>
   );

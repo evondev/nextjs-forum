@@ -8,7 +8,7 @@ import IconThumbUp from "../icons/IconThumbUp";
 interface VotesProps {
   type: "post" | "comment";
   itemId: string;
-  userId: string;
+  userId?: string;
   points: number;
   hasUpvoted: boolean;
   hasDownvoted: boolean;

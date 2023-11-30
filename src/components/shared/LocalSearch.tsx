@@ -3,7 +3,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useTransition } from "react";
 import { Input } from "../ui/input";
 
-const LocalSearch = () => {
+const LocalSearch = ({
+  placeholder = "Search discussions",
+}: {
+  placeholder?: string;
+}) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const params = useSearchParams();
@@ -18,7 +22,7 @@ const LocalSearch = () => {
     <div className="mb-5 relative">
       <Input
         className="no-focus bg-white h-12"
-        placeholder="Search dicussions..."
+        placeholder={placeholder}
         onChange={handleChange}
         defaultValue={params.get("search") || ""}
       />

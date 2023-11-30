@@ -1,9 +1,15 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import FollowButton from "../FollowButton";
 import HeadingWidget from "../HeadingWidget";
 
-const HitsUsersWidget = ({ users }: { users?: any[] }) => {
+const HitsUsersWidget = ({
+  users,
+  userId,
+}: {
+  users?: any[];
+  userId?: string;
+}) => {
   if (!users || users.length <= 0) return null;
   return (
     <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
@@ -15,13 +21,23 @@ const HitsUsersWidget = ({ users }: { users?: any[] }) => {
       </div>
       <div className="flex flex-col gap-5">
         {users.map((item, index) => (
-          <HitsUserItem item={item} key={index} />
+          <HitsUserItem
+            item={item}
+            hasFollowing={item?.followers.includes(userId)}
+            key={index}
+          />
         ))}
       </div>
     </div>
   );
 };
-const HitsUserItem = ({ item }: { item: any }) => {
+const HitsUserItem = ({
+  item,
+  hasFollowing,
+}: {
+  item: any;
+  hasFollowing: boolean;
+}) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -39,9 +55,10 @@ const HitsUserItem = ({ item }: { item: any }) => {
           </span>
         </div>
       </div>
-      <Button variant="outline" className="text-secondary border-secondary">
-        + Follow
-      </Button>
+      <FollowButton
+        userId={item?._id.toString()}
+        hasFollowing={hasFollowing}
+      ></FollowButton>
     </div>
   );
 };

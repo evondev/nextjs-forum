@@ -16,9 +16,13 @@ import {
 export async function getPosts(params: GetPostParams) {
   try {
     connectToDatabase();
-    const { searchQuery, page = 1, pageSize = 20, sorted } = params;
+    const { searchQuery, page = 1, pageSize = 20, sorted, topic } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Post> = {};
+    // find posts by topicId
+    if (topic) {
+      query.topic = topic;
+    }
     if (searchQuery) {
       query.$or = [
         { title: { $regex: searchQuery, $options: "i" } },
@@ -122,14 +126,12 @@ export async function getPostsByUserId(params: GetPostByUserIdParams) {
     connectToDatabase();
     const posts = await Post.find({ author: params.userId })
       .populate({
-        path: "tags",
-        model: Tag,
-        select: "_id name",
+        path: "topic",
+        model: Topic,
       })
       .populate({
         path: "author",
         model: User,
-        select: "username name",
       });
     return posts;
   } catch (error) {
@@ -250,6 +252,27 @@ export async function getPostsByLikedUser() {
         model: User,
         select: "username name",
       });
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getPostsByTopicId(params: any) {
+  try {
+    connectToDatabase();
+    const { topicId, page = 1, pageSize = 20 } = params;
+    const posts = await Post.find({ topic: topicId })
+      .populate({
+        path: "topic",
+        model: Topic,
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: "username name",
+      })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
     return posts;
   } catch (error) {
     console.log(error);

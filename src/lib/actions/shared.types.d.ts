@@ -8,6 +8,8 @@ export interface GetPostParams {
   searchQuery?: string;
   filter?: string;
   sorted?: "latest" | "popular";
+  topic?: string;
+  userId?: string;
 }
 export interface CreatePostParams {
   title: string;
@@ -78,4 +80,10 @@ export interface CreateTopicParams {
   value: string;
   icon: string;
   desc: string;
+}
+export interface FollowUserParams {
+  userId: string;
+  followerId?: string;
+  hasFollowing: boolean;
+  path?: string;
 }

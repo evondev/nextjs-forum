@@ -12,7 +12,7 @@ const TopDiscussionWidget = ({
   posts?: any[];
   userId?: string;
 }) => {
-  if (!posts || posts.length <= 0 || !userId) return null;
+  if (!posts || posts.length <= 0) return null;
   return (
     <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
       <HeadingWidget className="mb-5">Top Discussions</HeadingWidget>
@@ -24,7 +24,7 @@ const TopDiscussionWidget = ({
     </div>
   );
 };
-const DiscusstionItem = ({ item, userId }: { item: any; userId: string }) => {
+const DiscusstionItem = ({ item, userId }: { item: any; userId?: string }) => {
   return (
     <div className="flex items-start gap-3">
       <Votes

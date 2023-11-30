@@ -1,14 +1,14 @@
 - Local search ✅
 - Pagination ✅
 - Filter ✅
-- Follow member
+- Follow member ✅
 - Get posts by member
 - Get posts by following
-- Get posts by topic
+- Get posts by topic ✅
 - Add topic
 - Topics page
-- 404 page
-- No results page
+- 404 page ✅
+- No results page ✅
 - Loading skeleton
 - Breadcrumb
 - Profile page

@@ -8,6 +8,7 @@ import { connectToDatabase } from "../mongoose";
 import {
   CreateUserParams,
   DeleteUserParams,
+  FollowUserParams,
   GetAllUserParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -15,7 +16,10 @@ import {
 export async function getUserById({ userId }: { userId: string }) {
   try {
     connectToDatabase();
-    const user = await User.findOne({ clerkId: userId });
+    let user = await User.findOne({ clerkId: userId });
+    if (!user) {
+      user = await User.findById(userId);
+    }
     return user;
   } catch (error) {
     console.log(error);
@@ -60,12 +64,19 @@ export async function deleteUser(params: DeleteUserParams) {
     console.log(error);
   }
 }
-export async function getAllUsers(params: GetAllUserParams, userId?: string) {
+export async function getAllUsers(params: GetAllUserParams) {
   try {
     connectToDatabase();
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const { userId: clerkId } = auth();
+    let mongoUser: any;
+    if (clerkId) {
+      mongoUser = await getUserById({
+        userId: clerkId,
+      });
+    }
     const users = await User.find({
-      _id: { $ne: userId },
+      _id: { $ne: mongoUser?.id },
     }).sort({ createdAt: -1 });
 
     return users;
@@ -73,19 +84,33 @@ export async function getAllUsers(params: GetAllUserParams, userId?: string) {
     console.log(error);
   }
 }
-export async function followUser(followerId: string) {
+export async function followUser(params: FollowUserParams) {
   try {
     connectToDatabase();
     const { userId } = auth();
     const loggedInUser = await User.findOne({ clerkId: userId });
     const loggedInId = loggedInUser._id.toString();
-
-    await User.findByIdAndUpdate(followerId, {
-      $addToSet: { followers: loggedInId },
-    });
-    await User.findByIdAndUpdate(loggedInId, {
-      $addToSet: { following: followerId },
-    });
+    const { followerId, hasFollowing } = params;
+    if (!followerId || !userId) return;
+    let userQuery = {};
+    let followerQuery = {};
+    if (hasFollowing) {
+      followerQuery = {
+        $pull: { followers: loggedInId },
+      };
+      userQuery = {
+        $pull: { following: followerId },
+      };
+    } else {
+      followerQuery = {
+        $addToSet: { followers: loggedInId },
+      };
+      userQuery = {
+        $addToSet: { following: followerId },
+      };
+    }
+    await User.findByIdAndUpdate(followerId, followerQuery);
+    await User.findByIdAndUpdate(loggedInId, userQuery);
     revalidatePath(`/users`);
   } catch (error) {}
 }

@@ -2,10 +2,12 @@
 import { navLinks } from "@/constants";
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ActiveLink from "./active-link/ActiveLink";
 
 function LeftSidebar() {
   const { isSignedIn } = useAuth();
+  const pathname = usePathname();
   return (
     <div className="flex flex-col gap-10 dark:bg-dark3 p-5 bg-white  left-0 max-lg:hidden h-[calc(100vh-80px)] sticky top-20">
       <div className="flex flex-col gap-3">
@@ -14,6 +16,7 @@ function LeftSidebar() {
             key={link.url}
             href={link.url}
             className="flex items-center gap-5 p-3 rounded-lg text-base"
+            isActive={link?.isActive?.(pathname)}
           >
             {link.icon}
             <span>{link.title}</span>
