@@ -1,11 +1,12 @@
 "use client";
 import { updateUser } from "@/lib/actions/user.action";
 import { updateProfileSchema } from "@/lib/validations";
+import { UploadButton } from "@/utils/uploadthing";
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import IconFacebook from "../icons/IconFacebook";
@@ -29,6 +30,7 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
   const form = useForm<z.infer<typeof updateProfileSchema>>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
+      avatar: userProfile.avatar,
       name: userProfile.name,
       bio: userProfile.bio,
       website: userProfile.website,
@@ -38,6 +40,10 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
     },
   });
   const pathname = usePathname();
+  const avatar = useWatch({
+    control: form.control,
+    name: "avatar",
+  });
   if (!userProfile) return null;
   async function onSubmit(values: z.infer<typeof updateProfileSchema>) {
     await updateUser({
@@ -49,6 +55,7 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
         socials: {
           facebook: values.socials.facebook,
         },
+        avatar: values.avatar,
       },
       path: pathname,
     });
@@ -68,13 +75,40 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
           </div>
           <div className="flex items-center justify-between px-10">
             <div className="flex items-center gap-5">
-              <Image
-                src={userProfile?.avatar}
-                alt=""
-                width={160}
-                height={160}
-                className="w-[160px] h-[160px] object-cover rounded-full -translate-y-1/2 border-4 border-white"
+              <FormField
+                control={form.control}
+                name="avatar"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <>
+                        <div className="relative -translate-y-1/2 group">
+                          <UploadButton
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 ut-allowed-content:hidden ut-button:text-opacity-0 ut-button:w-10 ut-button:h-10 ut-button:rounded-full ut-button:opacity-0 group-hover:ut-button:opacity-100"
+                            endpoint="imageUploader"
+                            onClientUploadComplete={(res) => {
+                              toast.success("Upload Completed");
+                              form.setValue("avatar", res[0]?.url);
+                            }}
+                            onUploadError={(error: Error) => {
+                              toast.error(`ERROR! ${error.message}`);
+                            }}
+                          />
+                          <Image
+                            src={avatar || userProfile.avatar}
+                            alt=""
+                            width={160}
+                            height={160}
+                            className="w-[160px] h-[160px] object-cover rounded-full border-4 border-white"
+                          />
+                        </div>
+                      </>
+                    </FormControl>
+                    <FormMessage className="text-red-400" />
+                  </FormItem>
+                )}
               />
+
               <div className="flex-1">
                 <h3 className="font-semibold text-xl">
                   {userProfile.name} (@{userProfile.username})
