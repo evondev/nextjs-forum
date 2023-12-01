@@ -41,6 +41,7 @@ export interface GetAllUserParams {
   pageSize?: number;
   filter?: string;
   searchQuery?: string;
+  isFollowing?: boolean;
 }
 export interface GetAllTagParams {
   page?: number;
@@ -91,4 +92,8 @@ export interface GetTopicParams {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
+}
+export enum Role {
+  ADMIN = "ADMIN",
+  USER = "USER",
 }

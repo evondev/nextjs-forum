@@ -16,9 +16,19 @@ import {
 export async function getPosts(params: GetPostParams) {
   try {
     connectToDatabase();
-    const { searchQuery, page = 1, pageSize = 20, sorted, topic } = params;
+    const {
+      searchQuery,
+      page = 1,
+      pageSize = 20,
+      sorted,
+      topic,
+      userId,
+    } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Post> = {};
+    if (userId) {
+      query.author = userId;
+    }
     // find posts by topicId
     if (topic) {
       query.topic = topic;
@@ -274,6 +284,16 @@ export async function getPostsByTopicId(params: any) {
       .skip((page - 1) * pageSize)
       .limit(pageSize);
     return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function countPostByUserId(params: { userId: string }) {
+  try {
+    connectToDatabase();
+    const { userId } = params;
+    const count = await Post.countDocuments({ author: userId });
+    return count;
   } catch (error) {
     console.log(error);
   }

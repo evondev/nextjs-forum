@@ -10,9 +10,14 @@
 - No results page ✅
 - Breadcrumb ✅
 - Profile page ✅
-- Update Profile
+- Update My Profile ✅
+- User profile page ✅
 - Loading skeleton
 - Global search
+- Save post
+- Like post
+- Saved page
+- Liked page
 - CRUD topic
 - CRUD user
 - CRUD question

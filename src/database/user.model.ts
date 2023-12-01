@@ -19,6 +19,7 @@ export interface IUser extends Document {
   };
   liked: Schema.Types.ObjectId[];
   saved: Schema.Types.ObjectId[];
+  role: string;
   joinedAt: Date;
 }
 const UserSchema = new Schema({
@@ -94,6 +95,10 @@ const UserSchema = new Schema({
   joinedAt: {
     type: Date,
     default: Date.now,
+  },
+  role: {
+    type: String,
+    default: "USER",
   },
 });
 const User = models.User || model("User", UserSchema);

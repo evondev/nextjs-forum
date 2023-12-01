@@ -19,7 +19,7 @@ const LocalSearch = ({
     setTimeout(() => {
       startTransition(() => {
         const newUrl = formUrlQuery({
-          params: searchParams.toString(),
+          params: searchParams,
           key: "search",
           value,
         });

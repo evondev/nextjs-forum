@@ -17,8 +17,15 @@ export async function getUserById({ userId }: { userId: string }) {
   try {
     connectToDatabase();
     let user = await User.findOne({ clerkId: userId });
+    // get followers information
     if (!user) {
       user = await User.findById(userId);
+    }
+    if (user) {
+      const followers = await User.find({
+        _id: { $in: user.followers },
+      });
+      user.followers = followers;
     }
     return user;
   } catch (error) {
@@ -67,7 +74,14 @@ export async function deleteUser(params: DeleteUserParams) {
 export async function getAllUsers(params: GetAllUserParams) {
   try {
     connectToDatabase();
-    const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    const {
+      page = 1,
+      pageSize = 20,
+      filter,
+      searchQuery,
+      isFollowing = true,
+    } = params;
+    let query = {};
     const { userId: clerkId } = auth();
     let mongoUser: any;
     if (clerkId) {
@@ -75,9 +89,27 @@ export async function getAllUsers(params: GetAllUserParams) {
         userId: clerkId,
       });
     }
-    const users = await User.find({
-      _id: { $ne: mongoUser?.id },
-    }).sort({ createdAt: -1 });
+    if (mongoUser) {
+      query = {
+        _id: { $ne: mongoUser?.id },
+      };
+    }
+    if (searchQuery) {
+      query = {
+        ...query,
+        title: { $regex: searchQuery, $options: "i" },
+      };
+    }
+    let users = await User.find(query)
+      .sort({ createdAt: -1 })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    if (!isFollowing) {
+      // filter out users that the logged in user is already following
+      users = users.filter((user) => {
+        return !mongoUser?.following.includes(user._id.toString());
+      });
+    }
 
     return users;
   } catch (error) {
