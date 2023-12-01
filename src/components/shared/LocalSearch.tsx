@@ -1,20 +1,29 @@
 "use client";
+import { formUrlQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useTransition } from "react";
 import { Input } from "../ui/input";
 
 const LocalSearch = ({
   placeholder = "Search discussions",
+  searchParams,
 }: {
   placeholder?: string;
+  searchParams?: any;
 }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const params = useSearchParams();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
     setTimeout(() => {
       startTransition(() => {
-        router.push(`/?search=${e.target.value}`);
+        const newUrl = formUrlQuery({
+          params: searchParams.toString(),
+          key: "search",
+          value,
+        });
+        router.push(newUrl);
       });
     }, 1000);
   };

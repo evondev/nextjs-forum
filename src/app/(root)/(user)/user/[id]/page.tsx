@@ -5,6 +5,7 @@ import PostList from "@/components/shared/PostList";
 import HitsUsersWidget from "@/components/shared/widget/HitsUsersWidget";
 import { getPosts } from "@/lib/actions/post.action";
 import { getAllUsers, getUserById } from "@/lib/actions/user.action";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +20,13 @@ const UserDetailsPage = async ({
     userId: id,
   });
   if (!user) return null;
-
+  const { userId: clerkId } = auth();
+  let mongoUser;
+  if (clerkId) {
+    mongoUser = await getUserById({
+      userId: clerkId,
+    });
+  }
   const results = await getPosts({
     userId: user?._id,
   });
@@ -87,7 +94,11 @@ const UserDetailsPage = async ({
       <div className="grid grid-cols-[1fr_350px] gap-5">
         <div>
           <LocalSearch />
-          <PostList userId={user?._id} posts={results?.posts || []} title="" />
+          <PostList
+            userId={mongoUser?._id.toString()}
+            posts={results?.posts || []}
+            title=""
+          />
         </div>
         <div className="flex flex-col gap-5">
           <HitsUsersWidget users={users} />

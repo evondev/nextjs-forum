@@ -87,3 +87,8 @@ export interface FollowUserParams {
   hasFollowing: boolean;
   path?: string;
 }
+export interface GetTopicParams {
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}

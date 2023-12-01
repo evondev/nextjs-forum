@@ -37,7 +37,7 @@ async function Home({ searchParams }: { searchParams: any }) {
         <HomeFilters></HomeFilters>
         <PostList
           posts={results?.posts || []}
-          userId={mongoUser?._id}
+          userId={JSON.stringify(mongoUser?._id)}
         ></PostList>
         <Pagination
           pageNumber={searchParams.page ? +searchParams.page : 1}

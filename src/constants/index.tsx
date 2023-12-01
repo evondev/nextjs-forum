@@ -27,7 +27,7 @@ const navLinks: {
   },
   {
     icon: <IconProfile></IconProfile>,
-    url: "/profile",
+    url: "/my-profile",
     title: "My Profile",
   },
   // {

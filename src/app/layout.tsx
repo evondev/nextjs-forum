@@ -1,5 +1,3 @@
-import LeftSidebar from "@/components/shared/LeftSidebar";
-import { NavBar } from "@/components/shared/navbar/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -30,11 +28,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NavBar />
-            <div className="max-w-[1440px] mx-auto grid lg:grid-cols-[260px_minmax(0,1fr)] gap-5 min-h-screen items-start">
-              <LeftSidebar></LeftSidebar>
-              {children}
-            </div>
+            {children}
           </ThemeProvider>
         </body>
       </html>

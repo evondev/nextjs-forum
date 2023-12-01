@@ -2,15 +2,17 @@
 - Pagination ✅
 - Filter ✅
 - Follow member ✅
-- Get posts by member
+- Get posts by member ✅
 - Get posts by following
 - Get posts by topic ✅
-- Add topic
-- Topics page
+- Topics page ✅
 - 404 page ✅
 - No results page ✅
-- Loading skeleton
-- Breadcrumb
-- Profile page
+- Breadcrumb ✅
+- Profile page ✅
 - Update Profile
+- Loading skeleton
 - Global search
+- CRUD topic
+- CRUD user
+- CRUD question
