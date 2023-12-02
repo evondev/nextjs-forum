@@ -43,12 +43,12 @@ function PostCard({
   downVotes,
   mongoUser,
 }: PostProps) {
-  const currentUser = JSON.parse(mongoUser);
+  const currentUser = mongoUser ? JSON.parse(mongoUser) : null;
   return (
     <div className="flex items-start gap-3 relative">
       <ButtonLike
         postId={_id.toString()}
-        userId={currentUser?._id.toString()}
+        userId={currentUser?._id.toString() || ""}
         likes={likes}
         className="absolute -right-3 -top-3"
       />
