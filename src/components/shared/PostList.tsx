@@ -4,11 +4,13 @@ interface PostListProps {
   posts: any[];
   userId: string;
   title?: string;
+  mongoUser?: any;
 }
 const PostList = ({
   posts,
   userId,
   title = "Latest Discussions",
+  mongoUser,
 }: PostListProps) => {
   if (!posts || posts.length <= 0)
     return (
@@ -38,6 +40,7 @@ const PostList = ({
               topic={post.topic}
               upVotes={post.upVotes}
               downVotes={post.downVotes}
+              mongoUser={mongoUser}
             />
           ))}
         </div>

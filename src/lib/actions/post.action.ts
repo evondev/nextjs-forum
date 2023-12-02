@@ -11,6 +11,7 @@ import {
   GetPostByIdParams,
   GetPostByUserIdParams,
   GetPostParams,
+  LikePostParams,
 } from "./shared.types";
 
 export async function getPosts(params: GetPostParams) {
@@ -23,9 +24,13 @@ export async function getPosts(params: GetPostParams) {
       sorted,
       topic,
       userId,
+      isLiked,
     } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Post> = {};
+    if (isLiked) {
+      query.likes = userId;
+    }
     if (userId) {
       query.author = userId;
     }
@@ -220,7 +225,7 @@ export async function handleDownvote(params: {
     throw error;
   }
 }
-export async function likedPost(params: any) {
+export async function handleLikePost(params: LikePostParams) {
   try {
     connectToDatabase();
     const { postId, userId, hasLiked, path } = params;

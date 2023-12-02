@@ -27,6 +27,7 @@ export async function getUserById({ userId }: { userId: string }) {
       });
       user.followers = followers;
     }
+
     return user;
   } catch (error) {
     console.log(error);

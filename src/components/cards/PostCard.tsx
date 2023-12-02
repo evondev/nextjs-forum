@@ -1,6 +1,7 @@
 import { getTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import ButtonLike from "../buttons/ButtonLike";
 import IconComment from "../icons/IconComment";
 import IconDate from "../icons/IconDate";
 import IconHeart from "../icons/IconHeart";
@@ -25,6 +26,7 @@ interface PostProps {
   topic: any;
   upVotes: string[];
   downVotes: string[];
+  mongoUser?: any;
 }
 
 function PostCard({
@@ -39,9 +41,17 @@ function PostCard({
   topic,
   upVotes,
   downVotes,
+  mongoUser,
 }: PostProps) {
+  const currentUser = JSON.parse(mongoUser);
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex items-start gap-3 relative">
+      <ButtonLike
+        postId={_id.toString()}
+        userId={currentUser?._id.toString()}
+        likes={likes}
+        className="absolute -right-3 -top-3"
+      />
       <Votes
         type="post"
         itemId={JSON.stringify(_id)}

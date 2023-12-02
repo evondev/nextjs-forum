@@ -38,6 +38,7 @@ export async function getAllTopics(
         const postCount = await Post.countDocuments({ topic: topic._id });
         return {
           ...topic.toObject(),
+          _id: topic._id.toString(),
           postCount,
         };
       })

@@ -43,9 +43,9 @@ const DiscusstionItem = ({ item, userId }: { item: any; userId?: string }) => {
           <div className="flex items-center gap-2">
             <Image
               src={item?.author?.avatar}
-              width={32}
-              height={32}
-              className="rounded-full object-contain"
+              width={20}
+              height={20}
+              className="rounded-full object-cover w-5 h-5"
               alt="avatar"
             />
             <span className="font-medium text-sm">

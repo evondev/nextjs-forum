@@ -1,11 +1,12 @@
 "use client";
 import { navLinks } from "@/constants";
+import { CreateTopicParams } from "@/lib/actions/shared.types";
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ActiveLink from "./active-link/ActiveLink";
 
-function LeftSidebar() {
+function LeftSidebar({ topics }: { topics: CreateTopicParams[] }) {
   const { isSignedIn } = useAuth();
   const pathname = usePathname();
   return (
@@ -26,16 +27,17 @@ function LeftSidebar() {
       <div>
         <h3 className="uppercase font-semibold text-sm mb-3">Popular topics</h3>
         <div className="flex flex-col gap-3">
-          {/* {topicLinks.map((link) => (
-            <ActiveLink
-              key={link.url}
-              href={link.url}
-              className="flex items-center gap-5 p-3 rounded-lg text-base"
-            >
-              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"></div>
-              <span>{link.title}</span>
-            </ActiveLink>
-          ))} */}
+          {topics &&
+            topics.map((link) => (
+              <ActiveLink
+                key={link.name}
+                href={`/topic/${link.name}`}
+                className="flex items-center gap-5 p-3 rounded-lg text-base"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"></div>
+                <span>{link.name}</span>
+              </ActiveLink>
+            ))}
         </div>
       </div>
       {!isSignedIn && (

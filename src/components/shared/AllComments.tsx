@@ -45,7 +45,7 @@ const AllComments = async ({
                       alt=""
                       width={50}
                       height={50}
-                      className="rounded-full object-cover"
+                      className="rounded-full object-cover w-[50px] h-[50px]"
                     />
                   </Link>
                   <div>

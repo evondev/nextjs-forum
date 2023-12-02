@@ -12,12 +12,13 @@
 - Profile page ✅
 - Update My Profile ✅
 - User profile page ✅
-- Loading skeleton
-- Global search
-- Save post
-- Like post
-- Saved page
-- Liked page
+- Like post ✅
+- Liked page ✅
 - CRUD topic
 - CRUD user
 - CRUD question
+- Loading skeleton
+- Global search
+- Optimize performance
+- Test case
+- Deploy

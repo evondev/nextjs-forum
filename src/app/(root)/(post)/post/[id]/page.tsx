@@ -1,3 +1,4 @@
+import ButtonLike from "@/components/buttons/ButtonLike";
 import Comment from "@/components/forms/Comment";
 import IconComment from "@/components/icons/IconComment";
 import IconDate from "@/components/icons/IconDate";
@@ -8,7 +9,7 @@ import Votes from "@/components/shared/Votes";
 import MoreFromWidget from "@/components/shared/widget/MoreFromWidget";
 import ShareWidget from "@/components/shared/widget/ShareWidget";
 import TopDiscussionWidget from "@/components/shared/widget/TopDiscussionWidget";
-import { getPostById } from "@/lib/actions/post.action";
+import { getPostById, getPosts } from "@/lib/actions/post.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { getTimestamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
@@ -26,7 +27,7 @@ async function PostDetailsPage({
   });
 
   const { userId: clerkId } = auth();
-  let mongoUser;
+  let mongoUser: any;
   if (clerkId) {
     mongoUser = await getUserById({
       userId: clerkId,
@@ -34,10 +35,23 @@ async function PostDetailsPage({
   }
   if (!post) return null;
   const author = post.author;
+  const allPosts = await getPosts({
+    userId: author._id,
+  });
+  const otherPosts = await getPosts({
+    pageSize: 10,
+  });
+
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start p-5 pl-0">
       <div>
-        <div className="p-5 bg-white rounded-lg mb-5">
+        <div className="p-5 bg-white rounded-lg mb-5 relative">
+          <ButtonLike
+            className="absolute right-5 top-2"
+            postId={post._id.toString()}
+            userId={mongoUser?._id.toString()}
+            likes={post?.likes}
+          ></ButtonLike>
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-4">
               <Votes
@@ -93,8 +107,15 @@ async function PostDetailsPage({
       </div>
       <div className="flex flex-col gap-5">
         <ShareWidget></ShareWidget>
-        <MoreFromWidget></MoreFromWidget>
-        <TopDiscussionWidget></TopDiscussionWidget>
+        <MoreFromWidget
+          user={author}
+          posts={allPosts?.posts}
+          mongoUser={JSON.stringify(mongoUser)}
+        ></MoreFromWidget>
+        <TopDiscussionWidget
+          userId={JSON.stringify(mongoUser?._id)}
+          posts={otherPosts?.posts}
+        ></TopDiscussionWidget>
       </div>
     </div>
   );

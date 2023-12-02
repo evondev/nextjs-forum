@@ -1,9 +1,11 @@
 import IconFacebook from "@/components/icons/IconFacebook";
+import FollowButton from "@/components/shared/FollowButton";
 import HeadingWidget from "@/components/shared/HeadingWidget";
 import LocalSearch from "@/components/shared/LocalSearch";
 import PostList from "@/components/shared/PostList";
 import SocialIcon from "@/components/shared/SocialIcon";
 import HitsUsersWidget from "@/components/shared/widget/HitsUsersWidget";
+import UserMeta from "@/components/user/UserMeta";
 import { getPosts } from "@/lib/actions/post.action";
 import { getAllUsers, getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
@@ -33,6 +35,20 @@ const UserDetailsPage = async ({
     userId: id,
   });
   const users = await getAllUsers({});
+  const userMetaList = [
+    {
+      icon: "👋",
+      count: userProfile?.followers.length,
+    },
+    {
+      icon: "👉",
+      count: userProfile?.following.length,
+    },
+    {
+      icon: "👇",
+      count: (results && results.posts.length) || 0,
+    },
+  ];
   return (
     <div className="py-5">
       <div className="h-60 rounded-lg relative">
@@ -59,6 +75,10 @@ const UserDetailsPage = async ({
             <h4 className="text-sm text-secondary-color-3 mb-2">
               {userProfile.bio}
             </h4>
+            <FollowButton
+              hasFollowing={mongoUser?.following.includes(userProfile?._id)}
+              userId={userProfile?._id}
+            />
             <div className="flex items-center gap-3  text-secondary-color-3 text-sm">
               <div className="flex items-center justify-center gap-1">
                 <SocialIcon
@@ -76,33 +96,13 @@ const UserDetailsPage = async ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-            <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-              👋
-            </div>
-            <div>
-              <h4 className="text-secondary-color-3">Followers</h4>
-              <h5>{userProfile?.followers.length}</h5>
-            </div>
-          </div>
-          <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-            <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-              👋
-            </div>
-            <div>
-              <h4 className="text-secondary-color-3">Following</h4>
-              <h5>{userProfile?.following.length}</h5>
-            </div>
-          </div>
-          <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-            <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-              👋
-            </div>
-            <div>
-              <h4 className="text-secondary-color-3">Questions</h4>
-              <h5>{results?.posts.length}</h5>
-            </div>
-          </div>
+          {userMetaList.map((meta) => (
+            <UserMeta
+              key={meta.icon}
+              icon={meta.icon}
+              count={meta.count}
+            ></UserMeta>
+          ))}
         </div>
       </div>
       <div className="mb-5"></div>

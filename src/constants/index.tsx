@@ -1,4 +1,5 @@
 import IconCube from "@/components/icons/IconCube";
+import IconHeart from "@/components/icons/IconHeart";
 import IconHome from "@/components/icons/IconHome";
 import IconProfile from "@/components/icons/IconProfile";
 import IconUser from "@/components/icons/IconUser";
@@ -30,21 +31,11 @@ const navLinks: {
     url: "/my-profile",
     title: "My Profile",
   },
-  // {
-  //   icon: <IconTag></IconTag>,
-  //   url: "/tags",
-  //   title: "Tags",
-  // },
-  // {
-  //   icon: <IconHeart></IconHeart>,
-  //   url: "/liked",
-  //   title: "Liked posts",
-  // },
-  // {
-  //   icon: <IconBookmark></IconBookmark>,
-  //   url: "/saved",
-  //   title: "Saved posts",
-  // },
+  {
+    icon: <IconHeart className="w-6 h-6"></IconHeart>,
+    url: "/liked",
+    title: "Liked Posts",
+  },
 ];
 const homePageFilters = [
   {

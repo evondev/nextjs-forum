@@ -10,6 +10,7 @@ export interface GetPostParams {
   sorted?: "latest" | "popular";
   topic?: string;
   userId?: string;
+  isLiked?: boolean;
 }
 export interface CreatePostParams {
   title: string;
@@ -92,6 +93,12 @@ export interface GetTopicParams {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
+}
+export interface LikePostParams {
+  postId: string;
+  userId: string;
+  hasLiked: boolean;
+  path: string;
 }
 export enum Role {
   ADMIN = "ADMIN",

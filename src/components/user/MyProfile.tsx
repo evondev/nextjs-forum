@@ -2,7 +2,11 @@
 import { updateUser } from "@/lib/actions/user.action";
 import { updateProfileSchema } from "@/lib/validations";
 import { UploadButton } from "@/utils/uploadthing";
-import { GlobeAltIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowUpTrayIcon,
+  GlobeAltIcon,
+  PencilIcon,
+} from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -21,6 +25,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import UserMeta from "./UserMeta";
 interface MyProfileProps {
   mongoUser: any;
   postCount: Promise<number | undefined>;
@@ -61,6 +66,20 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
     });
     toast.success("Profile updated successfully");
   }
+  const userMetaList = [
+    {
+      icon: "👋",
+      count: userProfile?.followers.length,
+    },
+    {
+      icon: "👉",
+      count: userProfile?.following.length,
+    },
+    {
+      icon: "👇",
+      count: postCount,
+    },
+  ];
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -84,6 +103,16 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
                       <>
                         <div className="relative -translate-y-1/2 group">
                           <UploadButton
+                            content={{
+                              button({ ready }) {
+                                if (ready) {
+                                  return (
+                                    <ArrowUpTrayIcon className="w-5 h-5 stroke-white"></ArrowUpTrayIcon>
+                                  );
+                                }
+                                return <PencilIcon></PencilIcon>;
+                              },
+                            }}
                             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 ut-allowed-content:hidden ut-button:text-opacity-0 ut-button:w-10 ut-button:h-10 ut-button:rounded-full ut-button:opacity-0 group-hover:ut-button:opacity-100"
                             endpoint="imageUploader"
                             onClientUploadComplete={(res) => {
@@ -133,33 +162,13 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-                <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-                  👋
-                </div>
-                <div>
-                  <h4 className="text-secondary-color-3">Followers</h4>
-                  <h5>{userProfile.followers.length}</h5>
-                </div>
-              </div>
-              <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-                <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-                  👋
-                </div>
-                <div>
-                  <h4 className="text-secondary-color-3">Following</h4>
-                  <h5>{userProfile.following.length}</h5>
-                </div>
-              </div>
-              <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
-                <div className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-lg">
-                  👋
-                </div>
-                <div>
-                  <h4 className="text-secondary-color-3">Questions</h4>
-                  <h5>{postCount}</h5>
-                </div>
-              </div>
+              {userMetaList.map((meta) => (
+                <UserMeta
+                  key={meta.icon}
+                  icon={meta.icon}
+                  count={meta.count}
+                ></UserMeta>
+              ))}
             </div>
           </div>
           <div className="flex items-center justify-end gap-5">
