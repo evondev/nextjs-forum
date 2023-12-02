@@ -43,7 +43,7 @@ async function PostDetailsPage({
   });
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start p-5 pl-0">
+    <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start pl-0">
       <div>
         <div className="p-5 bg-white rounded-lg mb-5 relative">
           <ButtonLike

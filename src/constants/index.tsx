@@ -24,7 +24,6 @@ const navLinks: {
     icon: <IconCube></IconCube>,
     url: "/topics",
     title: "All Topics",
-    isActive: (pathname: string) => pathname.includes("topic"),
   },
   {
     icon: <IconProfile></IconProfile>,

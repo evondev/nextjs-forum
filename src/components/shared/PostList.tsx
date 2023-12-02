@@ -28,8 +28,8 @@ const PostList = ({
         <div className="flex flex-col gap-10">
           {posts?.map((post, index) => (
             <PostCard
-              key={post._id}
-              _id={post._id}
+              key={post._id.toString()}
+              _id={post._id.toString()}
               title={post.title}
               author={post.author}
               likes={post.likes}

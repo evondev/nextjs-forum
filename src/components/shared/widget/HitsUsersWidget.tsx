@@ -25,7 +25,9 @@ const HitsUsersWidget = ({
         {users.map((item, index) => (
           <HitsUserItem
             item={item}
-            hasFollowing={item?.followers.includes(JSON.parse(userId || ""))}
+            hasFollowing={item?.followers.includes(
+              userId ? JSON.parse(userId || "") : ""
+            )}
             key={index}
           />
         ))}

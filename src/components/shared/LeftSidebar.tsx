@@ -31,7 +31,7 @@ function LeftSidebar({ topics }: { topics: CreateTopicParams[] }) {
             topics.map((link) => (
               <ActiveLink
                 key={link.name}
-                href={`/topic/${link.name}`}
+                href={`/topic/${link._id}`}
                 className="flex items-center gap-5 p-3 rounded-lg text-base"
               >
                 <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"></div>

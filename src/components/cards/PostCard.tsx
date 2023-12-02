@@ -56,7 +56,7 @@ function PostCard({
         type="post"
         itemId={JSON.stringify(_id)}
         points={points}
-        userId={userId}
+        userId={userId.toString()}
         hasUpvoted={upVotes?.includes(JSON.parse(userId))}
         hasDownvoted={downVotes?.includes(JSON.parse(userId))}
       ></Votes>

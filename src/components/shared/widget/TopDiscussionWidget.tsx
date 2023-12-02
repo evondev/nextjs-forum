@@ -28,7 +28,7 @@ const DiscusstionItem = ({ item, userId }: { item: any; userId?: string }) => {
   return (
     <div className="flex items-start gap-3">
       <Votes
-        userId={userId}
+        userId={userId?.toString()}
         type={"post"}
         itemId={JSON.stringify(item?._id)}
         points={item?.points}

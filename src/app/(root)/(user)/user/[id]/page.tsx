@@ -50,7 +50,7 @@ const UserDetailsPage = async ({
     },
   ];
   return (
-    <div className="py-5">
+    <div className="">
       <div className="h-60 rounded-lg relative">
         <Image
           src="/images/banner.png"
