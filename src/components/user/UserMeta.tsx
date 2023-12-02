@@ -3,9 +3,11 @@ import React from "react";
 const UserMeta = ({
   icon,
   count,
+  title,
 }: {
   icon: React.ReactNode;
   count: number;
+  title: string;
 }) => {
   return (
     <div className="p-2 rounded-lg bg-gray-100 flex items-center gap-2">
@@ -13,7 +15,7 @@ const UserMeta = ({
         {icon}
       </div>
       <div>
-        <h4 className="text-secondary-color-3">Followers</h4>
+        <h4 className="text-secondary-color-3">{title}</h4>
         <h5>{count}</h5>
       </div>
     </div>

@@ -21,15 +21,15 @@ async function UsersPage({ searchParams }: { searchParams: any }) {
         <div className="p-5 bg-white rounded-lg flex flex-col gap-5 @container">
           {users &&
             users.length > 0 &&
-            users.map((user, index) => (
-              <UserCard
-                key={index}
-                user={JSON.parse(JSON.stringify(user))}
-                hasFollowing={userInfo?.following?.includes(
-                  user._id.toString()
-                )}
-              ></UserCard>
-            ))}
+            users.map((user, index) => {
+              return (
+                <UserCard
+                  key={index}
+                  user={JSON.parse(JSON.stringify(user))}
+                  hasFollowing={user?.followers?.includes(userInfo._id)}
+                ></UserCard>
+              );
+            })}
         </div>
       </div>
       <HitsUsersWidget

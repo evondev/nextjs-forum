@@ -26,6 +26,10 @@ export async function getUserById({ userId }: { userId: string }) {
         _id: { $in: user.followers },
       });
       user.followers = followers;
+      const following = await User.find({
+        _id: { $in: user.following },
+      });
+      user.following = following;
     }
 
     return user;

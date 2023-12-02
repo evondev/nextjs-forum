@@ -84,7 +84,7 @@ export interface CreateTopicParams {
   desc: string;
 }
 export interface FollowUserParams {
-  userId: string;
+  userId?: string;
   followerId?: string;
   hasFollowing: boolean;
   path?: string;

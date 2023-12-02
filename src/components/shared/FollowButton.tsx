@@ -7,9 +7,8 @@ interface FollowButtonProps {
   userId: string;
 }
 const FollowButton = ({ hasFollowing, userId }: FollowButtonProps) => {
-  const handleFollowUser = (userId: string) => {
+  const handleFollowUser = () => {
     followUser({
-      userId,
       hasFollowing,
       followerId: userId,
     });
@@ -23,7 +22,7 @@ const FollowButton = ({ hasFollowing, userId }: FollowButtonProps) => {
           ? "bg-secondary border-none"
           : "text-secondary border-secondary"
       )}
-      onClick={() => handleFollowUser(userId)}
+      onClick={() => handleFollowUser()}
     >
       {hasFollowing ? "Following" : "Follow"}
     </Button>

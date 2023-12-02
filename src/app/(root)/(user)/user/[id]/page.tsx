@@ -35,20 +35,27 @@ const UserDetailsPage = async ({
     userId: id,
   });
   const users = await getAllUsers({});
+  const postCount = results?.posts?.length;
   const userMetaList = [
     {
       icon: "👋",
       count: userProfile?.followers.length,
+      title: "Followers",
     },
     {
       icon: "👉",
       count: userProfile?.following.length,
+      title: "Following",
     },
     {
       icon: "👇",
-      count: (results && results.posts.length) || 0,
+      count: postCount,
+      title: "Posts",
     },
   ];
+  const hasFollowing = userProfile?.followers?.some(
+    (item: any) => item._id.toString() === mongoUser?._id.toString()
+  );
   return (
     <div className="">
       <div className="h-60 rounded-lg relative">
@@ -76,8 +83,8 @@ const UserDetailsPage = async ({
               {userProfile.bio}
             </h4>
             <FollowButton
-              hasFollowing={mongoUser?.following.includes(userProfile?._id)}
-              userId={userProfile?._id}
+              hasFollowing={hasFollowing}
+              userId={userProfile?._id.toString()}
             />
             <div className="flex items-center gap-3  text-secondary-color-3 text-sm">
               <div className="flex items-center justify-center gap-1">
@@ -101,6 +108,7 @@ const UserDetailsPage = async ({
               key={meta.icon}
               icon={meta.icon}
               count={meta.count}
+              title={meta.title}
             ></UserMeta>
           ))}
         </div>
@@ -141,7 +149,7 @@ const UserDetailsPage = async ({
                       alt=""
                       width={40}
                       height={40}
-                      className="w-10 h-10 rounded-full"
+                      className="w-10 h-10 rounded-full object-cover"
                     />
                   </Link>
                 )

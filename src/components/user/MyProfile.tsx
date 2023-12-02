@@ -70,14 +70,17 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
     {
       icon: "👋",
       count: userProfile?.followers.length,
+      title: "Followers",
     },
     {
       icon: "👉",
       count: userProfile?.following.length,
+      title: "Following",
     },
     {
       icon: "👇",
       count: postCount,
+      title: "Posts",
     },
   ];
   return (
@@ -92,51 +95,53 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
               className="w-full h-full object-cover rounded-lg"
             />
           </div>
-          <div className="flex items-center justify-between px-10">
+          <div className="flex flex-wrap max-md:flex-col items-center justify-between px-10">
             <div className="flex items-center gap-5">
-              <FormField
-                control={form.control}
-                name="avatar"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <>
-                        <div className="relative -translate-y-1/2 group">
-                          <UploadButton
-                            content={{
-                              button({ ready }) {
-                                if (ready) {
-                                  return (
-                                    <ArrowUpTrayIcon className="w-5 h-5 stroke-white"></ArrowUpTrayIcon>
-                                  );
-                                }
-                                return <PencilIcon></PencilIcon>;
-                              },
-                            }}
-                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 ut-allowed-content:hidden ut-button:text-opacity-0 ut-button:w-10 ut-button:h-10 ut-button:rounded-full ut-button:opacity-0 group-hover:ut-button:opacity-100"
-                            endpoint="imageUploader"
-                            onClientUploadComplete={(res) => {
-                              toast.success("Upload Completed");
-                              form.setValue("avatar", res[0]?.url);
-                            }}
-                            onUploadError={(error: Error) => {
-                              toast.error(`ERROR! ${error.message}`);
-                            }}
-                          />
-                          <Image
-                            src={avatar || userProfile.avatar}
-                            alt=""
-                            width={160}
-                            height={160}
-                            className="w-[160px] h-[160px] object-cover rounded-full border-4 border-white"
-                          />
-                        </div>
-                      </>
-                    </FormControl>
-                    <FormMessage className="text-red-400" />
-                  </FormItem>
-                )}
-              />
+              <div className="flex-shrink-0">
+                <FormField
+                  control={form.control}
+                  name="avatar"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <>
+                          <div className="relative -translate-y-1/2 group flex-shrink-0">
+                            <UploadButton
+                              content={{
+                                button({ ready }) {
+                                  if (ready) {
+                                    return (
+                                      <ArrowUpTrayIcon className="w-5 h-5 stroke-white"></ArrowUpTrayIcon>
+                                    );
+                                  }
+                                  return <PencilIcon></PencilIcon>;
+                                },
+                              }}
+                              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 ut-allowed-content:hidden ut-button:text-opacity-0 ut-button:w-10 ut-button:h-10 ut-button:rounded-full ut-button:opacity-0 group-hover:ut-button:opacity-100"
+                              endpoint="imageUploader"
+                              onClientUploadComplete={(res) => {
+                                toast.success("Upload Completed");
+                                form.setValue("avatar", res[0]?.url);
+                              }}
+                              onUploadError={(error: Error) => {
+                                toast.error(`ERROR! ${error.message}`);
+                              }}
+                            />
+                            <Image
+                              src={avatar || userProfile.avatar}
+                              alt=""
+                              width={160}
+                              height={160}
+                              className="w-[160px] h-[160px] object-cover rounded-full border-4 border-white flex-shrink-0"
+                            />
+                          </div>
+                        </>
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <div className="flex-1">
                 <h3 className="font-semibold text-xl">
@@ -161,17 +166,18 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-auto">
               {userMetaList.map((meta) => (
                 <UserMeta
                   key={meta.icon}
                   icon={meta.icon}
                   count={meta.count}
+                  title={meta.title}
                 ></UserMeta>
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-end gap-5">
+          <div className="flex items-center justify-end gap-5 max-lg:mt-10">
             <Button
               type="reset"
               variant="ghost"
@@ -183,7 +189,7 @@ const MyProfile = ({ mongoUser, postCount }: MyProfileProps) => {
               Save
             </Button>
           </div>
-          <div className="mt-10 grid grid-cols-2 gap-10">
+          <div className="mt-10 grid lg:grid-cols-2 gap-10">
             <FormField
               control={form.control}
               name="name"
