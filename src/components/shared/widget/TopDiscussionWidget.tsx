@@ -48,8 +48,8 @@ const DiscusstionItem = ({ item, userId }: { item: any; userId?: string }) => {
               className="rounded-full object-cover w-5 h-5"
               alt="avatar"
             />
-            <span className="font-medium text-sm">
-              {item?.author?.username}
+            <span className="font-medium text-sm text-secondary-color-3">
+              {item?.author?.name}
             </span>
           </div>
           <MetaItem icon={<IconComment />} text={item.comments.length || 0} />

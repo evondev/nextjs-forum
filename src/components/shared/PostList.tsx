@@ -25,7 +25,7 @@ const PostList = ({
     <>
       <div className="p-5 bgWhite_darkBgDark3 rounded-lg">
         {title && <h2 className="text-lg font-bold mb-5">{title}</h2>}
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10 @container">
           {posts?.map((post, index) => (
             <PostCard
               key={post._id.toString()}

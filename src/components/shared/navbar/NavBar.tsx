@@ -7,7 +7,7 @@ import GlobalSearch from "../search/GlobalSearch";
 
 export const NavBar = () => {
   return (
-    <div className="bg-white py-5 px-10 flex items-center justify-between dark:bg-dark3 sticky top-0 z-50">
+    <div className="bg-white py-5 px-5 lg:px-10 flex items-center justify-between dark:bg-dark3 sticky top-0 z-50">
       <Link href="/">
         <Image
           src="/images/logo.png"
@@ -23,7 +23,7 @@ export const NavBar = () => {
           <UserButton></UserButton>
         </div>
         <ModeToggle></ModeToggle>
-        <Link href="/create-post">
+        <Link href="/create-post" className="max-sm:hidden">
           <Button className="text-white">Start a discussion</Button>
         </Link>
       </div>

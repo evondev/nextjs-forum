@@ -6,7 +6,7 @@ import HeadingWidget from "../HeadingWidget";
 const ShareWidget = () => {
   const pathname = usePathname();
   return (
-    <div className="p-5 bg-white rounded-lg">
+    <div className="p-5 bg-white dark:bg-dark3 rounded-lg">
       <HeadingWidget>Share this post</HeadingWidget>
       <div className="flex items-center gap-2 mt-5">
         <FacebookShareButton url={pathname}>

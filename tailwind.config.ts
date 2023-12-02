@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+      },
       colors: {
         "secondary-color-bg-2": "#F7F7F7",
         "secondary-color-2": "#3F4354",

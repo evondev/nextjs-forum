@@ -14,6 +14,8 @@
 - User profile page ✅
 - Like post ✅
 - Liked page ✅
+- Dark mode ✅
+- Responsive ✅
 - CRUD topic
 - CRUD user
 - CRUD question

@@ -10,9 +10,9 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <NavBar />
-      <div className="max-w-[1440px] mx-auto grid lg:grid-cols-[260px_minmax(0,1fr)] gap-5 items-start">
+      <div className="max-w-[1440px] mx-auto grid lg:grid-cols-[260px_minmax(0,1fr)] items-start">
         <LeftSidebar topics={topics || []}></LeftSidebar>
-        <div className="py-5 pr-5">{children}</div>
+        <div className="p-5">{children}</div>
       </div>
     </>
   );

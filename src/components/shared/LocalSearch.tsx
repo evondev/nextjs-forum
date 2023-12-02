@@ -30,7 +30,7 @@ const LocalSearch = ({
   return (
     <div className="mb-5 relative">
       <Input
-        className="no-focus bg-white h-12"
+        className="no-focus bg-white dark:bg-dark3 dark:border-dark3 h-12"
         placeholder={placeholder}
         onChange={handleChange}
         defaultValue={params.get("search") || ""}

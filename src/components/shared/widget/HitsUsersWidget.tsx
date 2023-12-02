@@ -49,7 +49,7 @@ const HitsUserItem = ({
           src={item?.avatar}
           width={40}
           height={40}
-          className="rounded-full object-contain"
+          className="rounded-full object-cover w-8 h-8"
           alt="avatar"
         ></Image>
         <div className="flex flex-col">

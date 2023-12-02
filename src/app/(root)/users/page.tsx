@@ -15,10 +15,10 @@ async function UsersPage({ searchParams }: { searchParams: any }) {
     isFollowing: false,
   });
   return (
-    <div className="grid grid-cols-[1fr_320px] gap-5 items-start">
+    <div className="grid xl:grid-cols-[1fr_320px] gap-5 items-start">
       <div>
         <LocalSearch placeholder="Find member" />
-        <div className="p-5 bg-white rounded-lg flex flex-col gap-5">
+        <div className="p-5 bg-white rounded-lg flex flex-col gap-5 @container">
           {users &&
             users.length > 0 &&
             users.map((user, index) => (

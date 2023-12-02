@@ -45,7 +45,7 @@ async function PostDetailsPage({
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start pl-0">
       <div>
-        <div className="p-5 bg-white rounded-lg mb-5 relative">
+        <div className="p-5 bg-white dark:bg-dark3 rounded-lg mb-5 relative">
           <ButtonLike
             className="absolute right-5 top-2"
             postId={post._id.toString()}
@@ -92,7 +92,7 @@ async function PostDetailsPage({
           <h1 className="font-bold text-xl lg:text-2xl mb-5">{post.title}</h1>
           <ParseHTML data={post.content}></ParseHTML>
         </div>
-        <div className="p-5 bg-white rounded-lg">
+        <div className="p-5 bg-white dark:bg-dark3 rounded-lg">
           <Comment
             authorId={JSON.stringify(mongoUser?._id)}
             postId={JSON.stringify(post._id)}

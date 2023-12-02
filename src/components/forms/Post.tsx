@@ -104,7 +104,7 @@ function Post({
                   <FormControl>
                     <Input
                       placeholder="New discussion title..."
-                      className="no-focus p-4 h-auto font-semibold text-lg"
+                      className="no-focus p-4 h-auto font-semibold text-lg dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -113,63 +113,67 @@ function Post({
               </>
             )}
           />
-          <FormField
-            control={form.control}
-            name="desc"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Description (optional)"
-                      className="no-focus h-12"
-                      required={false}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="topic"
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="h-12">
-                        <div className="line-clamp-1 flex-1 text-left">
-                          <SelectValue placeholder="Select a topic" />
-                        </div>
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectGroup>
-                          {topics &&
-                            topics.map((topic) => (
-                              <SelectItem
-                                className="hover:bg-gray-100"
-                                key={topic.name}
-                                value={JSON.stringify(topic._id!)}
-                              >
-                                {topic.name}
-                              </SelectItem>
-                            ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              </>
-            )}
-          />
-
+          <div className="grid grid-cols-2 gap-5">
+            <FormField
+              control={form.control}
+              name="desc"
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="Description (optional)"
+                        className="no-focus h-12 dark:border-gray-600"
+                        required={false}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-400" />
+                  </FormItem>
+                </>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="topic"
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="h-12 dark:border-gray-600 no-focus">
+                          <div className="line-clamp-1 flex-1 text-left">
+                            <SelectValue
+                              placeholder="Select a topic"
+                              className="no-focus"
+                            />
+                          </div>
+                        </SelectTrigger>
+                        <SelectContent className="bg-white dark:bg-dark3 dark:border-dark2">
+                          <SelectGroup className="no-focus border-none">
+                            {topics &&
+                              topics.map((topic) => (
+                                <SelectItem
+                                  className="hover:bg-gray-100 dark:hover:bg-dark4"
+                                  key={topic.name}
+                                  value={JSON.stringify(topic._id!)}
+                                >
+                                  {topic.name}
+                                </SelectItem>
+                              ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="text-red-400" />
+                  </FormItem>
+                </>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="content"

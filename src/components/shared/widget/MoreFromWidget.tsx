@@ -8,7 +8,7 @@ interface Props {
 const MoreFromWidget = ({ user, posts, mongoUser }: Props) => {
   if (!user || !posts || posts.length <= 0) return null;
   return (
-    <div className="p-5 bg-white rounded-lg">
+    <div className="p-5 bg-white dark:bg-dark3 rounded-lg">
       <HeadingWidget>More by {user.username}</HeadingWidget>
       <div className="flex flex-col gap-5 mt-5">
         {posts.map((post, index) => (

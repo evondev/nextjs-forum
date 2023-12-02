@@ -50,7 +50,7 @@ function PostCard({
         postId={_id.toString()}
         userId={currentUser?._id.toString() || ""}
         likes={likes}
-        className="absolute -right-3 -top-3"
+        className="absolute right-0 -top-3 max-xs:hidden"
       />
       <Votes
         type="post"
@@ -68,15 +68,12 @@ function PostCard({
         height={40}
       />
       <div className="flex-1 flex flex-col items-start justify-between gap-2">
-        <Link
-          href={`/post/${_id}`}
-          className="text-base lg:text-lg font-semibold"
-        >
+        <Link href={`/post/${_id}`} className="xl:text-lg font-semibold">
           {title}
         </Link>
         <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-3 text-sm text-secondary-color-3">
-            <strong>{author?.name}</strong>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-secondary-color-3 w-full">
+            <span className="font-medium">{author?.name}</span>
             <div className="flex items-center gap-1">
               <IconComment className="w-4 h-4" />
               <span>{comments.length}</span>
@@ -89,10 +86,10 @@ function PostCard({
               <IconDate className="w-4 h-4"></IconDate>
               {getTimestamp(createdAt)}
             </div>
+            <Link href={`/topic/${topic?._id}`} className="ml-auto">
+              <TagItem name={topic?.name}></TagItem>
+            </Link>
           </div>
-          <Link href={`/topic/${topic?._id}`}>
-            <TagItem name={topic?.name}></TagItem>
-          </Link>
         </div>
       </div>
     </div>

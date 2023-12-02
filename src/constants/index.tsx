@@ -79,8 +79,7 @@ const editorOptions = (field: any, theme: any) => ({
       "image |" +
       "h1 h2 h3 h4 h5 h6 | preview | fullscreen |" +
       "link",
-    content_style: `
-                           body { font-family: DM sans, Inter,Helvetica,Arial,sans-serif; font-size:14px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; }`,
+    content_style: `body { font-family: DM sans, Inter,Helvetica,Arial,sans-serif; font-size:14px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; }`,
   },
 });
 

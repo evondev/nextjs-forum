@@ -1,5 +1,4 @@
 "use client";
-import { followUser } from "@/lib/actions/user.action";
 import Image from "next/image";
 import Link from "next/link";
 import FollowButton from "../shared/FollowButton";
@@ -15,15 +14,8 @@ interface UserCardProps {
   hasFollowing: boolean;
 }
 function UserCard({ user, hasFollowing }: UserCardProps) {
-  const handleFollowUser = (userId: string) => {
-    followUser({
-      userId,
-      hasFollowing,
-      followerId: user._id,
-    });
-  };
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center gap-2 justify-between">
       <Link href={`/user/${user._id}`} className="flex items-center gap-3">
         <Image
           src={user.avatar}
@@ -40,7 +32,9 @@ function UserCard({ user, hasFollowing }: UserCardProps) {
         </div>
       </Link>
       <div className="flex items-center gap-3 flex-shrink-0">
-        <div className="font-medium">{user?.followers.length} Followers</div>
+        <div className="font-medium max-sm:hidden">
+          {user?.followers.length} Followers
+        </div>
         <FollowButton
           userId={user._id}
           hasFollowing={hasFollowing}

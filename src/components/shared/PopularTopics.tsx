@@ -19,7 +19,7 @@ const PopularTopics = async ({ data, header = true }: PopularTopicsProps) => {
           </Link>
         </div>
       )}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 @container">
         {data &&
           data.length > 0 &&
           data.map((topic, index) => (
