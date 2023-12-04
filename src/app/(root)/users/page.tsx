@@ -26,7 +26,11 @@ async function UsersPage({ searchParams }: { searchParams: any }) {
                 <UserCard
                   key={index}
                   user={JSON.parse(JSON.stringify(user))}
-                  hasFollowing={user?.followers?.includes(userInfo._id)}
+                  hasFollowing={
+                    userInfo?.id
+                      ? user?.followers?.includes(userInfo?._id)
+                      : false
+                  }
                 ></UserCard>
               );
             })}
