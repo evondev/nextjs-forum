@@ -2,6 +2,7 @@
 import { navLinks } from "@/constants";
 import { CreateTopicParams } from "@/lib/actions/shared.types";
 import { useAuth } from "@clerk/nextjs";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ActiveLink from "./active-link/ActiveLink";
@@ -16,7 +17,7 @@ function LeftSidebar({ topics }: { topics: CreateTopicParams[] }) {
           <ActiveLink
             key={link.url}
             href={link.url}
-            className="flex items-center gap-5 p-3 rounded-lg text-base"
+            className="flex items-center gap-3 p-3 rounded-full text-base font-medium"
             isActive={link?.isActive?.(pathname)}
           >
             {link.icon}
@@ -32,9 +33,17 @@ function LeftSidebar({ topics }: { topics: CreateTopicParams[] }) {
               <ActiveLink
                 key={link.name}
                 href={`/topic/${link._id}`}
-                className="flex items-center gap-5 p-3 rounded-lg text-base"
+                className="flex items-center gap-3 p-3 rounded-full text-base font-medium"
               >
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100"></div>
+                <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center">
+                  <Image
+                    width={20}
+                    height={20}
+                    src={link.icon || ""}
+                    alt="icon"
+                    className="w-3 h-3"
+                  />
+                </div>
                 <span>{link.name}</span>
               </ActiveLink>
             ))}

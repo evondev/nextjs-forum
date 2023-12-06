@@ -80,8 +80,8 @@ export interface CreateTopicParams {
   _id?: string;
   name: string;
   value: string;
-  icon: string;
-  desc: string;
+  icon?: string;
+  desc?: string;
 }
 export interface FollowUserParams {
   userId?: string;
@@ -101,6 +101,7 @@ export interface LikePostParams {
   path: string;
 }
 export enum Role {
+  SUPER_ADMIN = "SUPER_ADMIN",
   ADMIN = "ADMIN",
   USER = "USER",
 }

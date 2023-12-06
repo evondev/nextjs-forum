@@ -21,5 +21,11 @@ const updateProfileSchema = z.object({
     youtube: z.string().max(100).optional(),
   }),
 });
+const newTopicSchema = z.object({
+  name: z.string().min(5).max(100),
+  value: z.string().min(5).max(100).optional(),
+  icon: z.string().min(5).max(100).optional(),
+  desc: z.string().min(5).max(100).optional(),
+});
 
-export { commentSchema, postSchema, updateProfileSchema };
+export { commentSchema, newTopicSchema, postSchema, updateProfileSchema };

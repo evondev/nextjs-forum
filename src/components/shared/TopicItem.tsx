@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 function TopicItem({ topic }: { topic?: any }) {
@@ -8,7 +9,15 @@ function TopicItem({ topic }: { topic?: any }) {
       className="flex @sm:items-center flex-col @sm:flex-row items-start justify-between gap-2"
     >
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-100"></div>
+        <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+          <Image
+            width={20}
+            height={20}
+            src={topic.icon}
+            alt="icon"
+            className="w-5 h-5"
+          />
+        </div>
         <div>
           <h3 className="font-semibold">{topic.name}</h3>
           <div className="text-sm text-secondary-color-3">{topic.desc}</div>

@@ -16,7 +16,11 @@
 - Liked page ✅
 - Dark mode ✅
 - Responsive ✅
-- CRUD topic
+- Create topic ✅
+- Update topic
+- Delete topic
+- Fetching topic
+- Pagination / Filter topic
 - CRUD user
 - CRUD question
 - Loading skeleton
