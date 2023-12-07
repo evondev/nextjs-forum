@@ -125,9 +125,10 @@ export async function followUser(params: FollowUserParams) {
   try {
     connectToDatabase();
     const { userId } = auth();
+    if (!userId) return;
     const loggedInUser = await User.findOne({ clerkId: userId });
     const loggedInId = loggedInUser._id.toString();
-    const { followerId, hasFollowing } = params;
+    const { followerId, hasFollowing, path } = params;
     if (!followerId || !userId) return;
     let userQuery = {};
     let followerQuery = {};
@@ -148,6 +149,6 @@ export async function followUser(params: FollowUserParams) {
     }
     await User.findByIdAndUpdate(followerId, followerQuery);
     await User.findByIdAndUpdate(loggedInId, userQuery);
-    revalidatePath(`/users`);
+    revalidatePath(path);
   } catch (error) {}
 }

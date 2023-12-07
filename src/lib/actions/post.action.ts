@@ -163,6 +163,7 @@ export async function handleUpvote(params: {
   try {
     connectToDatabase();
     const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
+    if (!userId) return;
     let updateQuery = {};
     if (hasUpvoted) {
       updateQuery = { $pull: { upVotes: userId }, $inc: { points: -1 } };
@@ -199,6 +200,7 @@ export async function handleDownvote(params: {
   try {
     connectToDatabase();
     const { postId, userId, hasUpvoted, hasDownvoted, path } = params;
+    if (!userId) return;
     let updateQuery = {};
     if (hasDownvoted) {
       updateQuery = { $pull: { downVotes: userId }, $inc: { points: 1 } };

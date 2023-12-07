@@ -87,7 +87,7 @@ export interface FollowUserParams {
   userId?: string;
   followerId?: string;
   hasFollowing: boolean;
-  path?: string;
+  path: string;
 }
 export interface GetTopicParams {
   page?: number;

@@ -45,14 +45,14 @@ async function PostDetailsPage({
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-5 lg:items-start pl-0">
       <div>
-        <div className="p-5 bg-white dark:bg-dark3 rounded-lg mb-5 relative">
+        <div className="p-5 bg-white dark:bg-dark3 rounded-lg mb-5 relative @container">
           <ButtonLike
             className="absolute right-5 top-2"
             postId={post._id.toString()}
             userId={mongoUser?._id.toString()}
             likes={post?.likes}
           ></ButtonLike>
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col items-stretch @[440px]:flex-row gap-5 @[440px]:items-center justify-between mb-5">
             <div className="flex items-center gap-4">
               <Votes
                 type="post"

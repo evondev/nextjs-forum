@@ -1,5 +1,6 @@
 "use client";
 import { followUser } from "@/lib/actions/user.action";
+import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../ui/button";
 interface FollowButtonProps {
@@ -7,10 +8,12 @@ interface FollowButtonProps {
   userId: string;
 }
 const FollowButton = ({ hasFollowing, userId }: FollowButtonProps) => {
-  const handleFollowUser = () => {
-    followUser({
+  const pathname = usePathname();
+  const handleFollowUser = async () => {
+    await followUser({
       hasFollowing,
       followerId: userId,
+      path: pathname,
     });
   };
   return (

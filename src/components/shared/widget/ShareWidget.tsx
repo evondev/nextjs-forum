@@ -1,15 +1,17 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import HeadingWidget from "../HeadingWidget";
 
 const ShareWidget = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const url = `${pathname}`;
   return (
     <div className="p-5 bg-white dark:bg-dark3 rounded-lg">
       <HeadingWidget>Share this post</HeadingWidget>
       <div className="flex items-center gap-2 mt-5">
-        <FacebookShareButton url={pathname}>
+        <FacebookShareButton url={url}>
           <div className="flex items-center gap-2 py-1 px-2 rounded bg-blue-50 text-[#2979ff] text-sm font-medium">
             <span>
               <svg
@@ -28,7 +30,7 @@ const ShareWidget = () => {
             <span>Facebook</span>
           </div>
         </FacebookShareButton>
-        <TwitterShareButton url={pathname}>
+        <TwitterShareButton url={url}>
           <div className="flex items-center gap-2 py-1 px-2 rounded bg-blue-50 text-[#00aefd] text-sm font-medium">
             <span>
               <svg

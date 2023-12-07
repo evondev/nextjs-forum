@@ -56,9 +56,9 @@ function PostCard({
         type="post"
         itemId={JSON.stringify(_id)}
         points={points}
-        userId={userId.toString()}
-        hasUpvoted={upVotes?.includes(JSON.parse(userId))}
-        hasDownvoted={downVotes?.includes(JSON.parse(userId))}
+        userId={userId ? userId.toString() : ""}
+        hasUpvoted={userId ? upVotes?.includes(JSON.parse(userId)) : false}
+        hasDownvoted={userId ? downVotes?.includes(JSON.parse(userId)) : false}
       ></Votes>
       <Image
         src={author?.avatar}
