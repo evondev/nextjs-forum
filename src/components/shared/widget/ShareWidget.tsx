@@ -1,12 +1,16 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import HeadingWidget from "../HeadingWidget";
 
 const ShareWidget = () => {
+  const [location, setLocation] = useState("");
+  useEffect(() => {
+    setLocation(window.location.href);
+  }, []);
   const pathname = usePathname();
-  const router = useRouter();
-  const url = `${pathname}`;
+  const url = `${location}${pathname}`;
   return (
     <div className="p-5 bg-white dark:bg-dark3 rounded-lg">
       <HeadingWidget>Share this post</HeadingWidget>
